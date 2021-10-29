@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:particles_flutter/particles_flutter.dart';
-import 'package:portfolio/about.dart';
+import 'about.dart';
 
 class BackgroundAnimation extends StatefulWidget {
   const BackgroundAnimation({Key? key}) : super(key: key);

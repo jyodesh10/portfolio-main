@@ -39,6 +39,7 @@ dependencies:
   avatar_glow: ^2.0.1
   quiver: ^2.0.0+1
   http: ^0.13.4
+  animated_text_kit: ^4.2.1
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
@@ -64,10 +65,12 @@ flutter:
 
   assets:
     - assets/images/jyo1.png
+    - assets/images/jyo3.png
     - assets/images/jyo.png
     - assets/images/jyodesh.jpg
     - assets/images/circle.png
     - assets/images/logo.png
+    - assets/images/android-icon-192x192.png
 
   fonts:
     - family: Roboto

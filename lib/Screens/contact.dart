@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:mailto/mailto.dart';
 import 'package:portfolio/config/colors.dart';
-import 'package:portfolio/responsive_widget.dart';
+import 'responsive_widget.dart';
 import 'package:http/http.dart' as http;
 
 class Contact extends StatefulWidget {
@@ -33,84 +33,172 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
-        mobileScreen: Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            // Color(0xFF546E7A),
-            // Color(0xFF455A64),
-            Colors.black.withOpacity(0.9),
+        desktopScreen: Container(
+          decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.5),
+              border: Border(
+                  top: BorderSide(
+                color: Colors.black.withOpacity(0.5),
+              ))),
+          child: Container(
+            //height: MediaQuery.of(context).size.height / 2,
+            decoration: BoxDecoration(
+              border: Border.all(width: 0, color: Colors.transparent),
+              gradient: LinearGradient(
+                colors: [
+                  // Color(0xFF546E7A),
+                  // Color(0xFF455A64),
+                  Colors.black.withOpacity(0.9),
 
-            Color(0xFF263238),
-            Color(0xFF37474F),
-            // Colors.transparent,
-            // Colors.transparent,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0, 0.5, 1],
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-        child: Column(
-          children: [
-            Text(
-              "Contact Me",
-              style: TextStyle(
-                fontFamily: 'Lemon',
-                color: Colors.amber,
-                fontSize: 30,
+                  Color(0xFF263238),
+                  Color(0xFF37474F),
+                  // Colors.transparent,
+                  // Colors.transparent,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0, 0.5, 1],
               ),
             ),
-            SizedBox(height: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(0, 80, 0, 80),
+              child: Column(
+                children: [
+                  Text(
+                    "Contact Me",
+                    style: TextStyle(
+                      fontFamily: 'Lemon',
+                      color: Colors.amber,
+                      fontSize: 40,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        //flex: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            PersonalInfo(
+                                context,
+                                Icon(
+                                  Icons.email,
+                                  color: AppColors.greyLight,
+                                ),
+                                'Email',
+                                'jyodeshshakya@gmail.com'),
+                            SizedBox(height: 10),
+                            PersonalInfo(
+                                context,
+                                Icon(
+                                  Icons.phone,
+                                  color: AppColors.greyLight,
+                                ),
+                                'Phone',
+                                '+977 9813504214'),
+                            SizedBox(height: 10),
+                            PersonalInfo(
+                                context,
+                                Icon(
+                                  Icons.location_on,
+                                  color: AppColors.greyLight,
+                                ),
+                                'Location',
+                                'Kathmandu, Nepal'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 50,
+                      ),
+                      Container(width: 400, child: ContactForm(context))
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        mobileScreen: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                // Color(0xFF546E7A),
+                // Color(0xFF455A64),
+                Colors.black.withOpacity(0.9),
+
+                Color(0xFF263238),
+                Color(0xFF37474F),
+                // Colors.transparent,
+                // Colors.transparent,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: [0, 0.5, 1],
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+            child: Column(
               children: [
-                PersonalInfo(
-                    context,
-                    Icon(
-                      Icons.email,
-                      color: AppColors.greyLight,
-                    ),
-                    'Email',
-                    'jyodeshshakya@gmail.com'),
-                SizedBox(height: 10),
-                PersonalInfo(
-                    context,
-                    Icon(
-                      Icons.phone,
-                      color: AppColors.greyLight,
-                    ),
-                    'Phone',
-                    '+977 9813504214'),
-                SizedBox(height: 10),
-                PersonalInfo(
-                    context,
-                    Icon(
-                      Icons.location_on,
-                      color: AppColors.greyLight,
-                    ),
-                    'Location',
-                    'Kathmandu, Nepal'),
+                Text(
+                  "Contact Me",
+                  style: TextStyle(
+                    fontFamily: 'Lemon',
+                    color: Colors.amber,
+                    fontSize: 30,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PersonalInfo(
+                        context,
+                        Icon(
+                          Icons.email,
+                          color: AppColors.greyLight,
+                        ),
+                        'Email',
+                        'jyodeshshakya@gmail.com'),
+                    SizedBox(height: 10),
+                    PersonalInfo(
+                        context,
+                        Icon(
+                          Icons.phone,
+                          color: AppColors.greyLight,
+                        ),
+                        'Phone',
+                        '+977 9813504214'),
+                    SizedBox(height: 10),
+                    PersonalInfo(
+                        context,
+                        Icon(
+                          Icons.location_on,
+                          color: AppColors.greyLight,
+                        ),
+                        'Location',
+                        'Kathmandu, Nepal'),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  height: 500,
+                  width: 400,
+                  decoration: BoxDecoration(
+                      // border: Border.all(width: 2, color: AppColors.black),
+                      // borderRadius: BorderRadius.circular(10),
+                      color: Colors.transparent),
+                  child: ContactForm(context),
+                )
               ],
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Container(
-              height: 500,
-              width: 400,
-              decoration: BoxDecoration(
-                  // border: Border.all(width: 2, color: AppColors.black),
-                  // borderRadius: BorderRadius.circular(10),
-                  color: Colors.transparent),
-              child: ContactForm(context),
-            )
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 
   Widget PersonalInfo(BuildContext context, Icon, String label, String text) {
@@ -165,7 +253,7 @@ class _ContactState extends State<Contact> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your Name';
-                } else if (value!.isValidName()) {
+                } else if (value.isValidName()) {
                   return null;
                 } else {
                   return 'name is Invalid ';
@@ -192,7 +280,7 @@ class _ContactState extends State<Contact> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your Email';
-                } else if (value!.isValidEmail) {
+                } else if (value.isValidEmail) {
                   return null;
                 } else {
                   return 'Email is Invalid ';

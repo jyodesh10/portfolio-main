@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio/config/colors.dart';
-import 'package:portfolio/responsive_widget.dart';
+import 'responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:portfolio/home.dart';
+import 'home.dart';
 
 const _url = 'https://github.com/jyodesh10';
 const _url1 =
