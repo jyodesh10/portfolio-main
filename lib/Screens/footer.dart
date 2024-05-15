@@ -9,6 +9,7 @@ const linkedin =
     'https://np.linkedin.com/in/jyodesh-shakya-ba6a50145?trk=public_profile_browsemap_profile-result-card_result-card_full-click';
 
 const facebook = 'https://facebook.com';
+const whatsapp = 'https://wa.me/9813504214';
 
 class Footer extends StatefulWidget {
   const Footer({super.key});
@@ -72,16 +73,29 @@ class _FooterState extends State<Footer> {
                           FontAwesomeIcons.facebook,
                           color: AppColors.greyLight,
                         )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    IconButton(
+                        padding: EdgeInsets.zero,
+                        iconSize: 30,
+                        color: AppColors.greyLight,
+                        onPressed: () => _launchURL(whatsapp),
+                        icon: const FaIcon(
+                          FontAwesomeIcons.whatsapp,
+                          color: AppColors.greyLight,
+                        )),
                   ],
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Copyright © 2024 Jyodesh Shakya.',
+                  'Copyright © 2024 Jyodesh Shakya | All rights reserved',
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.normal,
                       color: Colors.grey.shade500),
-                )
+                ),
+                const SizedBox(height: 20),
               ],
             ),
           ],

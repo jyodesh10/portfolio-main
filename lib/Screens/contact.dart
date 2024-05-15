@@ -63,7 +63,7 @@ class _ContactState extends State<Contact> {
               child: Column(
                 children: [
                   const Text(
-                    "Contact Me",
+                    "Get In Touch",
                     style: TextStyle(
                       fontFamily: 'Lemon',
                       color: Colors.amber,
@@ -139,7 +139,7 @@ class _ContactState extends State<Contact> {
             child: Column(
               children: [
                 const Text(
-                  "Contact Me",
+                  "Get In Touch",
                   style: TextStyle(
                     fontFamily: 'Lemon',
                     color: Colors.amber,

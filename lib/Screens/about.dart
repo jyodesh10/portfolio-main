@@ -203,26 +203,18 @@ class _AboutState extends State<About> {
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: SizedBox(
-                      height: 200,
-                      child: GridView.builder(
-                          // padding: const EdgeInsets.all(5.5),
-                          itemCount: skills.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4,
-                                  crossAxisSpacing: 2,
-                                  mainAxisSpacing: 2,
-                                  childAspectRatio: 1.2),
-                          itemBuilder: _itemBuilder),
-                    ),
-                  ),
-                ],
-              ),
+              GridView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                shrinkWrap: true,
+                itemCount: skills.length,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 2,
+                        childAspectRatio: 1.2),
+                itemBuilder: _itemBuilder),
             ],
           ),
         ),
@@ -233,21 +225,20 @@ class _AboutState extends State<About> {
   Widget _itemBuilder(BuildContext context, int index) {
     return Container(
       margin: const EdgeInsets.all(10),
-      height: 30,
-      width: 40,
       decoration: BoxDecoration(
           border: Border.all(width: 2, color: AppColors.cyyan),
           borderRadius: BorderRadius.circular(10),
           color: Colors.blueGrey[900]),
-      child: ListTile(
-        title: Center(
-            child: Text(
+      child: Center(
+        child: Text(
           skills[index],
           style: const TextStyle(
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.normal,
-              color: AppColors.greyLight),
-        )),
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.normal,
+            color: AppColors.greyLight
+          ),
+          overflow: TextOverflow.ellipsis,
+        )
       ),
       // elevation: 8,
       // shadowColor: Colors.black,
