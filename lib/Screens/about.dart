@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/config/colors.dart';
 import 'responsive_widget.dart';
 
-import 'animation.dart';
 
 final List<String> skills = <String>[
   'Dart',
@@ -16,10 +15,11 @@ final List<String> skills = <String>[
 ];
 
 class About extends StatefulWidget {
-  const About({Key? key}) : super(key: key);
+  const About({super.key});
 
   @override
-  _AboutState createState() => _AboutState();
+  
+  State<About> createState() => _AboutState();
 }
 
 class _AboutState extends State<About> {
@@ -27,116 +27,114 @@ class _AboutState extends State<About> {
   Widget build(BuildContext context) {
     return ResponsiveWidget(
       desktopScreen: Container(
-        child: Container(
-          // height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            border: Border.all(width: 0, color: Colors.transparent),
-            gradient: LinearGradient(
-              colors: [
-                // Color(0xFF546E7A),
-                // Color(0xFF455A64),
-                Colors.black.withOpacity(0.9),
-
-                Color(0xFF263238),
-                Color(0xFF37474F),
-                // Colors.transparent,
-                // Colors.transparent,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0, 0.6, 1],
-            ),
+        // height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          border: Border.all(width: 0, color: Colors.transparent),
+          gradient: LinearGradient(
+            colors: [
+              // Color(0xFF546E7A),
+              // Color(0xFF455A64),
+              Colors.black.withOpacity(0.9),
+      
+              const Color(0xFF263238),
+              const Color(0xFF37474F),
+              // Colors.transparent,
+              // Colors.transparent,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: const [0, 0.6, 1],
           ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 20, left: 20, top: 20, bottom: 20),
-                child: Column(
-                  children: [
-                    Row(children: [
-                      Expanded(
-                        flex: 7,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "About Me",
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  right: 20, left: 20, top: 20, bottom: 20),
+              child: Column(
+                children: [
+                  Row(children: [
+                    Expanded(
+                      flex: 7,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "About Me",
+                            style: TextStyle(
+                              fontFamily: 'Lemon',
+                              color: Colors.amber,
+                              fontSize: 40,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 700,
+                            child: Text(
+                              "I'm a mobile and web developer based in Kathmandu, Nepal currently developing mobile apps and websites.",
                               style: TextStyle(
-                                fontFamily: 'Lemon',
-                                color: Colors.amber,
-                                fontSize: 40,
-                              ),
+                                  fontSize: 21,
+                                  fontFamily: 'Roboto',
+                                  color: Colors.grey),
                             ),
-                            Container(
-                              width: 700,
-                              child: Text(
-                                "I\'m a mobile and web developer based in Kathmandu, Nepal currently developing mobile apps and websites.",
-                                style: TextStyle(
-                                    fontSize: 21,
-                                    fontFamily: 'Roboto',
-                                    color: Colors.grey),
-                              ),
+                          ),
+                          const SizedBox(
+                            height: 80,
+                          ),
+                          const Text(
+                            "Skills",
+                            style: TextStyle(
+                              fontFamily: 'Lemon',
+                              color: Colors.amber,
+                              fontSize: 40,
                             ),
-                            SizedBox(
-                              height: 80,
-                            ),
-                            Text(
-                              "Skills",
-                              style: TextStyle(
-                                fontFamily: 'Lemon',
-                                color: Colors.amber,
-                                fontSize: 40,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 4,
-                              children: [
-                                'Dart',
-                                'Java',
-                                'Python',
-                                'Javascript',
-                                'Html',
-                                'Css',
-                                'C#',
-                                'Illustrator'
-                              ]
-                                  .map((String name) => Chip(
-                                        avatar: CircleAvatar(
-                                          child: Text(
-                                            name.substring(0, 1),
-                                            style: TextStyle(fontSize: 15),
-                                          ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 4,
+                            children: [
+                              'Dart',
+                              'Java',
+                              'Python',
+                              'Javascript',
+                              'Html',
+                              'Css',
+                              'C#',
+                              'Illustrator'
+                            ]
+                                .map((String name) => Chip(
+                                      avatar: CircleAvatar(
+                                        child: Text(
+                                          name.substring(0, 1),
+                                          style: const TextStyle(fontSize: 15),
                                         ),
-                                        label: Text(
-                                          name,
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                      ))
-                                  .toList(),
-                            ),
-                          ],
+                                      ),
+                                      label: Text(
+                                        name,
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                    ))
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: ClipPath(
+                        child: Image.asset(
+                          "assets/images/circle.png",
+                          width: 10,
                         ),
                       ),
-                      Expanded(
-                        flex: 4,
-                        child: ClipPath(
-                          child: Image.asset(
-                            "assets/images/circle.png",
-                            width: 10,
-                          ),
-                        ),
-                      )
-                    ]),
-                  ],
-                ),
-              )
-            ],
-          ),
+                    )
+                  ]),
+                ],
+              ),
+            )
+          ],
         ),
       ),
       mobileScreen: Container(
@@ -147,31 +145,30 @@ class _AboutState extends State<About> {
               // Color(0xFF455A64),
               Colors.black.withOpacity(0.9),
 
-              Color(0xFF263238),
-              Color(0xFF37474F),
+              const Color(0xFF263238),
+              const Color(0xFF37474F),
               // Colors.transparent,
               // Colors.transparent,
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            stops: [0, 0.5, 1],
+            stops: const [0, 0.5, 1],
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
           child: Column(
             children: [
-              // BackgroundAnimation(),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                 child: ClipPath(
                   child: Image.asset(
-                    "assets/images/jyo1.png",
+                    "assets/images/circle.png",
                     width: 200,
                   ),
                 ),
               ),
-              Text(
+              const Text(
                 "About Me",
                 style: TextStyle(
                   fontFamily: 'Lemon',
@@ -179,23 +176,23 @@ class _AboutState extends State<About> {
                   fontSize: 30,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+              const Padding(
+                padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
                 child: Center(
                   child: Text(
-                    "I\'m a mobile and web developer based in Kathmandu, Nepal currently developing mobile apps and websites.",
+                    "I'm a mobile and web developer based in Kathmandu, Nepal currently developing mobile apps and websites.",
                     style: TextStyle(
                         fontSize: 20, fontFamily: 'Roboto', color: Colors.grey),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Text(
+              const Text(
                 "Skills",
                 style: TextStyle(
                   fontFamily: 'Lemon',
@@ -203,7 +200,7 @@ class _AboutState extends State<About> {
                   fontSize: 30,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
@@ -216,7 +213,7 @@ class _AboutState extends State<About> {
                           // padding: const EdgeInsets.all(5.5),
                           itemCount: skills.length,
                           gridDelegate:
-                              new SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 4,
                                   crossAxisSpacing: 2,
                                   mainAxisSpacing: 2,
@@ -235,7 +232,7 @@ class _AboutState extends State<About> {
 
   Widget _itemBuilder(BuildContext context, int index) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       height: 30,
       width: 40,
       decoration: BoxDecoration(
@@ -245,8 +242,8 @@ class _AboutState extends State<About> {
       child: ListTile(
         title: Center(
             child: Text(
-          "${skills[index]}",
-          style: TextStyle(
+          skills[index],
+          style: const TextStyle(
               fontFamily: 'Roboto',
               fontWeight: FontWeight.normal,
               color: AppColors.greyLight),

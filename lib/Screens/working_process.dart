@@ -3,10 +3,10 @@ import 'package:portfolio/config/colors.dart';
 import 'responsive_widget.dart';
 
 class WorkingProcess extends StatefulWidget {
-  const WorkingProcess({Key? key}) : super(key: key);
+  const WorkingProcess({super.key});
 
   @override
-  _WorkingProcessState createState() => _WorkingProcessState();
+  State<WorkingProcess> createState() => _WorkingProcessState();
 }
 
 class _WorkingProcessState extends State<WorkingProcess> {
@@ -21,9 +21,9 @@ class _WorkingProcessState extends State<WorkingProcess> {
             colors: [
               // Color(0xFF546E7A),
               // Color(0xFF455A64),
-              Color(0xFF37474F),
+              const Color(0xFF37474F),
 
-              Color(0xFF263238),
+              const Color(0xFF263238),
               Colors.black.withOpacity(0.9)
 
               // Colors.transparent,
@@ -31,14 +31,14 @@ class _WorkingProcessState extends State<WorkingProcess> {
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            stops: [0, 0.5, 1],
+            stops: const [0, 0.5, 1],
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
           child: Column(
             children: [
-              Text(
+              const Text(
                 "Working Process",
                 style: TextStyle(
                   fontFamily: 'Lemon',
@@ -46,10 +46,10 @@ class _WorkingProcessState extends State<WorkingProcess> {
                   fontSize: 40,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
-              Container(
+              SizedBox(
                 width: 1500,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -59,19 +59,19 @@ class _WorkingProcessState extends State<WorkingProcess> {
                         context,
                         "1.",
                         "PLAN",
-                        Icon(Icons.fact_check_outlined,
+                        const Icon(Icons.fact_check_outlined,
                             color: AppColors.greyLight)),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     buildCard(
                         context,
                         "2.",
                         "DESIGN",
-                        Icon(Icons.design_services_outlined,
+                        const Icon(Icons.design_services_outlined,
                             color: AppColors.greyLight)),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     buildCard(context, "3.", "CODE",
-                        Icon(Icons.code_rounded, color: AppColors.greyLight)),
-                    SizedBox(width: 20),
+                        const Icon(Icons.code_rounded, color: AppColors.greyLight)),
+                    const SizedBox(width: 20),
                   ],
                 ),
               )
@@ -88,9 +88,9 @@ class _WorkingProcessState extends State<WorkingProcess> {
             colors: [
               // Color(0xFF546E7A),
               // Color(0xFF455A64),
-              Color(0xFF37474F),
+              const Color(0xFF37474F),
 
-              Color(0xFF263238),
+              const Color(0xFF263238),
               Colors.black.withOpacity(0.9),
 
               // Colors.transparent,
@@ -98,14 +98,14 @@ class _WorkingProcessState extends State<WorkingProcess> {
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            stops: [0, 0.5, 1],
+            stops: const [0, 0.5, 1],
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
           child: Column(
             children: [
-              Text(
+              const Text(
                 "Working Process",
                 style: TextStyle(
                   fontFamily: 'Lemon',
@@ -114,20 +114,20 @@ class _WorkingProcessState extends State<WorkingProcess> {
                 ),
               ),
               buildCard(context, "1.", "PLAN",
-                  Icon(Icons.fact_check_outlined, color: AppColors.greyLight)),
+                  const Icon(Icons.fact_check_outlined, color: AppColors.greyLight)),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               buildCard(
                   context,
                   "2.",
                   "DESIGN",
-                  Icon(Icons.design_services_outlined,
+                  const Icon(Icons.design_services_outlined,
                       color: AppColors.greyLight)),
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               buildCard(context, "3.", "CODE",
-                  Icon(Icons.code_rounded, color: AppColors.greyLight)),
-              SizedBox(height: 10),
+                  const Icon(Icons.code_rounded, color: AppColors.greyLight)),
+              const SizedBox(height: 10),
               // card('Design',
               //     IconButton(onPressed: null, icon: Icon(Icons.design_services)))
             ],
@@ -137,18 +137,18 @@ class _WorkingProcessState extends State<WorkingProcess> {
     );
   }
 
-  Widget buildCard(BuildContext context, String index, String text, Icon) {
+  Widget buildCard(BuildContext context, String index, String text, icon) {
     return Card(
       elevation: 3,
       color: Colors.transparent,
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: AppColors.cyyan, width: 3),
+        side: const BorderSide(color: AppColors.cyyan, width: 3),
         borderRadius: BorderRadius.circular(10),
       ),
-      margin: EdgeInsets.all(20.0),
-      child: Container(
-        height: 200,
-        width: 200,
+      margin: const EdgeInsets.all(20.0),
+      child: SizedBox(
+        height: 220,
+        width: 220,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -159,7 +159,7 @@ class _WorkingProcessState extends State<WorkingProcess> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   index,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: AppColors.greyLight,
                     fontSize: 30,
                     fontWeight: FontWeight.w700,
@@ -172,13 +172,13 @@ class _WorkingProcessState extends State<WorkingProcess> {
                     iconSize: 70,
                     color: Colors.white,
                     onPressed: null,
-                    icon: Icon),
+                    icon: icon),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Text(
                   text,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                       color: AppColors.greyLight),

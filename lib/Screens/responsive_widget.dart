@@ -6,8 +6,7 @@ class ResponsiveWidget extends StatelessWidget {
   final Widget? mobileScreen;
 
   const ResponsiveWidget(
-      {Key? key, this.desktopScreen, this.tabletScreen, this.mobileScreen})
-      : super(key: key);
+      {super.key, this.desktopScreen, this.tabletScreen, this.mobileScreen});
 
   @override
   Widget build(BuildContext context) {

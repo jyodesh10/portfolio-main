@@ -3,19 +3,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio/config/colors.dart';
 import 'responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'home.dart';
 
-const _url = 'https://github.com/jyodesh10';
-const _url1 =
+const github = 'https://github.com/jyodesh10';
+const linkedin =
     'https://np.linkedin.com/in/jyodesh-shakya-ba6a50145?trk=public_profile_browsemap_profile-result-card_result-card_full-click';
 
-const _url2 = 'https://facebook.com';
+const facebook = 'https://facebook.com';
 
 class Footer extends StatefulWidget {
-  const Footer({Key? key}) : super(key: key);
+  const Footer({super.key});
 
   @override
-  _FooterState createState() => _FooterState();
+  State<Footer> createState() => _FooterState();
 }
 
 class _FooterState extends State<Footer> {
@@ -44,40 +43,40 @@ class _FooterState extends State<Footer> {
                     IconButton(
                         padding: EdgeInsets.zero,
                         iconSize: 30,
-                        onPressed: () => _launchURL(),
-                        icon: FaIcon(
+                        onPressed: () => _launchURL(github),
+                        icon: const FaIcon(
                           FontAwesomeIcons.github,
                           color: AppColors.greyLight,
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     IconButton(
                         padding: EdgeInsets.zero,
                         iconSize: 30,
                         color: AppColors.greyLight,
-                        onPressed: () => _launchURL1(),
-                        icon: FaIcon(
+                        onPressed: () => _launchURL(linkedin),
+                        icon: const FaIcon(
                           FontAwesomeIcons.linkedin,
                           color: AppColors.greyLight,
                         )),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     IconButton(
                         padding: EdgeInsets.zero,
                         iconSize: 30,
                         color: AppColors.greyLight,
-                        onPressed: () => _launchURL2(),
-                        icon: FaIcon(
+                        onPressed: () => _launchURL(facebook),
+                        icon: const FaIcon(
                           FontAwesomeIcons.facebook,
                           color: AppColors.greyLight,
                         )),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
-                  'Copyright © 2021 Jyodesh Shakya.',
+                  'Copyright © 2024 Jyodesh Shakya.',
                   style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.normal,
@@ -92,11 +91,6 @@ class _FooterState extends State<Footer> {
   }
 }
 
-void _launchURL() async =>
-    await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
-void _launchURL1() async => await canLaunch(_url1)
-    ? await launch(_url1)
-    : throw 'Could not launch $_url1';
-void _launchURL2() async => await canLaunch(_url2)
-    ? await launch(_url2)
-    : throw 'Could not launch $_url2';
+
+void _launchURL(String url) async =>
+    await canLaunchUrl(Uri.parse(url)) ? await launchUrl(Uri.parse(url)) : throw 'Could not launch $url';

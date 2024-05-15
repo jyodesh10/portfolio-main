@@ -1,26 +1,24 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:mailto/mailto.dart';
 import 'package:portfolio/config/colors.dart';
 import 'responsive_widget.dart';
 import 'package:http/http.dart' as http;
 
 class Contact extends StatefulWidget {
-  const Contact({Key? key}) : super(key: key);
+  const Contact({super.key});
 
   @override
-  _ContactState createState() => _ContactState();
+  State<Contact> createState() => _ContactState();
 }
 
 class _ContactState extends State<Contact> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController nameController = new TextEditingController();
-  TextEditingController emailController = new TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
-  TextEditingController bodyController = new TextEditingController();
+  TextEditingController bodyController = TextEditingController();
 
   //  void _setText() {
   //   setState(() {
@@ -50,21 +48,21 @@ class _ContactState extends State<Contact> {
                   // Color(0xFF455A64),
                   Colors.black.withOpacity(0.9),
 
-                  Color(0xFF263238),
-                  Color(0xFF37474F),
+                  const Color(0xFF263238),
+                  const Color(0xFF37474F),
                   // Colors.transparent,
                   // Colors.transparent,
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                stops: [0, 0.5, 1],
+                stops: const [0, 0.5, 1],
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 80, 0, 80),
+              padding: const EdgeInsets.fromLTRB(0, 80, 0, 80),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Contact Me",
                     style: TextStyle(
                       fontFamily: 'Lemon',
@@ -72,48 +70,45 @@ class _ContactState extends State<Contact> {
                       fontSize: 40,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        //flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            PersonalInfo(
-                                context,
-                                Icon(
-                                  Icons.email,
-                                  color: AppColors.greyLight,
-                                ),
-                                'Email',
-                                'jyodeshshakya@gmail.com'),
-                            SizedBox(height: 10),
-                            PersonalInfo(
-                                context,
-                                Icon(
-                                  Icons.phone,
-                                  color: AppColors.greyLight,
-                                ),
-                                'Phone',
-                                '+977 9813504214'),
-                            SizedBox(height: 10),
-                            PersonalInfo(
-                                context,
-                                Icon(
-                                  Icons.location_on,
-                                  color: AppColors.greyLight,
-                                ),
-                                'Location',
-                                'Kathmandu, Nepal'),
-                          ],
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          personalInfo(
+                              context,
+                              const Icon(
+                                Icons.email,
+                                color: AppColors.greyLight,
+                              ),
+                              'Email',
+                              'jyodeshshakya@gmail.com'),
+                          const SizedBox(height: 10),
+                          personalInfo(
+                              context,
+                              const Icon(
+                                Icons.phone,
+                                color: AppColors.greyLight,
+                              ),
+                              'Phone',
+                              '+977 9813504214'),
+                          const SizedBox(height: 10),
+                          personalInfo(
+                              context,
+                              const Icon(
+                                Icons.location_on,
+                                color: AppColors.greyLight,
+                              ),
+                              'Location',
+                              'Kathmandu, Nepal'),
+                        ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 50,
                       ),
-                      Container(width: 400, child: ContactForm(context))
+                      SizedBox(width: 400, child: contactForm(context))
                     ],
                   ),
                 ],
@@ -129,21 +124,21 @@ class _ContactState extends State<Contact> {
                 // Color(0xFF455A64),
                 Colors.black.withOpacity(0.9),
 
-                Color(0xFF263238),
-                Color(0xFF37474F),
+                const Color(0xFF263238),
+                const Color(0xFF37474F),
                 // Colors.transparent,
                 // Colors.transparent,
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              stops: [0, 0.5, 1],
+              stops: const [0, 0.5, 1],
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+            padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
             child: Column(
               children: [
-                Text(
+                const Text(
                   "Contact Me",
                   style: TextStyle(
                     fontFamily: 'Lemon',
@@ -151,31 +146,31 @@ class _ContactState extends State<Contact> {
                     fontSize: 30,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PersonalInfo(
+                    personalInfo(
                         context,
-                        Icon(
+                        const Icon(
                           Icons.email,
                           color: AppColors.greyLight,
                         ),
                         'Email',
                         'jyodeshshakya@gmail.com'),
-                    SizedBox(height: 10),
-                    PersonalInfo(
+                    const SizedBox(height: 10),
+                    personalInfo(
                         context,
-                        Icon(
+                        const Icon(
                           Icons.phone,
                           color: AppColors.greyLight,
                         ),
                         'Phone',
                         '+977 9813504214'),
-                    SizedBox(height: 10),
-                    PersonalInfo(
+                    const SizedBox(height: 10),
+                    personalInfo(
                         context,
-                        Icon(
+                        const Icon(
                           Icons.location_on,
                           color: AppColors.greyLight,
                         ),
@@ -183,17 +178,17 @@ class _ContactState extends State<Contact> {
                         'Kathmandu, Nepal'),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
                   height: 500,
                   width: 400,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       // border: Border.all(width: 2, color: AppColors.black),
                       // borderRadius: BorderRadius.circular(10),
                       color: Colors.transparent),
-                  child: ContactForm(context),
+                  child: contactForm(context),
                 )
               ],
             ),
@@ -201,7 +196,7 @@ class _ContactState extends State<Contact> {
         ));
   }
 
-  Widget PersonalInfo(BuildContext context, Icon, String label, String text) {
+  Widget personalInfo(BuildContext context, icon, String label, String text) {
     return FittedBox(
       // height: 300,
       //width: 300,
@@ -213,22 +208,22 @@ class _ContactState extends State<Contact> {
               iconSize: 25,
               color: Colors.white,
               onPressed: null,
-              icon: Icon),
+              icon: icon),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 5,
               ),
               Text(label,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                       color: AppColors.greyLight)),
               const SizedBox(height: 5),
               Text(text,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 15,
                       color: AppColors.greyLight))
@@ -239,8 +234,8 @@ class _ContactState extends State<Contact> {
     );
   }
 
-  Widget ContactForm(BuildContext context) {
-    final maxLines = 5;
+  Widget contactForm(BuildContext context) {
+    const maxLines = 5;
     return Form(
       key: _formKey,
       child: Padding(
@@ -259,8 +254,8 @@ class _ContactState extends State<Contact> {
                   return 'name is Invalid ';
                 }
               },
-              style: TextStyle(color: AppColors.greyLight),
-              decoration: InputDecoration(
+              style: const TextStyle(color: AppColors.greyLight),
+              decoration: const InputDecoration(
                 hintText: 'Name',
                 border: OutlineInputBorder(),
                 hintStyle: TextStyle(color: Colors.blueGrey),
@@ -272,7 +267,7 @@ class _ContactState extends State<Contact> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
@@ -286,8 +281,8 @@ class _ContactState extends State<Contact> {
                   return 'Email is Invalid ';
                 }
               },
-              style: TextStyle(color: AppColors.greyLight),
-              decoration: InputDecoration(
+              style: const TextStyle(color: AppColors.greyLight),
+              decoration: const InputDecoration(
                 hintText: 'Email',
                 border: OutlineInputBorder(),
                 hintStyle: TextStyle(color: Colors.blueGrey),
@@ -299,10 +294,10 @@ class _ContactState extends State<Contact> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
-            Container(
+            SizedBox(
               height: maxLines * 24.0,
               child: TextFormField(
                 controller: bodyController,
@@ -313,8 +308,8 @@ class _ContactState extends State<Contact> {
                   return null;
                 },
                 maxLines: maxLines,
-                style: TextStyle(color: AppColors.greyLight),
-                decoration: InputDecoration(
+                style: const TextStyle(color: AppColors.greyLight),
+                decoration: const InputDecoration(
                   hintText: 'Message',
                   hintStyle: TextStyle(color: Colors.blueGrey),
                   border: OutlineInputBorder(),
@@ -327,7 +322,7 @@ class _ContactState extends State<Contact> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Align(
@@ -345,7 +340,6 @@ class _ContactState extends State<Contact> {
                       const SnackBar(content: Text('Successfully Submitted')),
                     );
                   } else {
-                    print("error submission");
                   }
                 },
                 height: 40,
@@ -354,7 +348,7 @@ class _ContactState extends State<Contact> {
                 isReverse: true,
                 selectedTextColor: Colors.black,
                 transitionType: TransitionType.CENTER_ROUNDER,
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                     fontSize: 15,
                     fontFamily: 'Roboto',
                     color: AppColors.greyLight),
@@ -375,43 +369,28 @@ class _ContactState extends State<Contact> {
     required String email,
     required String body,
   }) async {
-    final serviceId = 'service_a9hwh16';
-    final template_id = 'template_a0t9r6b';
-    final user_id = 'user_CIq0M4Njb997ZHmzEOW89';
+    const serviceId = 'service_a9hwh16';
+    const templateId = 'template_a0t9r6b';
+    const userId = 'user_CIq0M4Njb997ZHmzEOW89';
 
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
     final response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'service_id': serviceId,
-          'template_id': template_id,
-          'user_id': user_id,
+          'template_id': templateId,
+          'user_id': userId,
           'template_params': {
             'user_name': name,
             'user_email': email,
             'user_message': body,
           }
         }));
-  }
+    if(response.statusCode == 200 ) {
 
-  Future<void> _sendMail() async {
-    final mailto = Mailto(
-      to: ['jyodeshshakya@gmai.com'],
-      subject: nameController.text.trim(),
-      body: bodyController.text.trim(),
-    );
-
-    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 3000);
-    String renderHtml(Mailto mailto) =>
-        '''<html><head><title>mailto example</title></head><body><a href="$mailto">Open mail client</a></body></html>''';
-    await for (HttpRequest request in server) {
-      request.response
-        ..statusCode = HttpStatus.ok
-        ..headers.contentType = ContentType.html
-        ..write(renderHtml(mailto));
-      await request.response.close();
     }
   }
+
 
   // @override
   // void dispose() {
@@ -424,9 +403,9 @@ class _ContactState extends State<Contact> {
 
 extension StringExtensions on String {
   bool get isValidEmail => RegExp(
-          "^[a-zA-Z0-9.a-zA-Z0-9.!#\$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(this.trim());
+          "^[a-zA-Z0-9.a-zA-Z0-9.!#\$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+")
+      .hasMatch(trim());
 
   bool isValidName({minLength = 3}) =>
-      this.trim().isNotEmpty && (this.trim().length >= minLength);
+      trim().isNotEmpty && (trim().length >= minLength);
 }

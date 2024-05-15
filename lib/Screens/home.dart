@@ -1,5 +1,7 @@
+import 'package:client_information/client_information.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../header.dart';
+import 'projects.dart';
 import 'responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,32 +12,40 @@ import 'contact.dart';
 import 'footer.dart';
 import 'working_process.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:avatar_glow/avatar_glow.dart';
 
-const _url = 'https://github.com/jyodesh10';
-const _url1 =
+const github = 'https://github.com/jyodesh10';
+const linkedin =
     'https://np.linkedin.com/in/jyodesh-shakya-ba6a50145?trk=public_profile_browsemap_profile-result-card_result-card_full-click';
 
-const _url2 = 'https://facebook.com';
+const facebook = 'https://facebook.com/zyodes10';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
-  _HomeState createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  final aboutKey = new GlobalKey();
-  final wpKey = new GlobalKey();
-  final contactKey = new GlobalKey();
-  final _scrollController = ScrollController();
+  final aboutKey = GlobalKey();
+  final wpKey = GlobalKey();
+  final contactKey = GlobalKey();
+  int count = 0;
   // final _fabStream = StreamController<bool>();
   // Future scrollToAbout() async {
   //   final context = aboutKey.currentContext!;
   //   await Scrollable.ensureVisible(context, duration: Duration(seconds: 2));
   // }
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Stream<QuerySnapshot> collectionStream =
+      FirebaseFirestore.instance.collection('visits').snapshots();
+  @override
+  void initState() {
+    updateCounter();
+    super.initState();
+  }
 
   void scrollToAbout() {
     final context = aboutKey.currentContext!;
@@ -50,6 +60,28 @@ class _HomeState extends State<Home> {
   void scrollToWp() {
     final context = wpKey.currentContext!;
     Scrollable.ensureVisible(context, duration: const Duration(seconds: 2));
+  }
+
+  updateCounter() async {
+    final deviceInfo = await getdeviceInfo();
+    final deviceIds = await FirebaseFirestore.instance.collection('deviceId').get();
+    if(!deviceIds.docs.map((element) => element["deviceId"]).toList().contains( deviceInfo.deviceId.toString())) {
+      FirebaseFirestore.instance.collection('deviceId').doc( deviceInfo.deviceId.toString()).set({
+        "deviceId" : deviceInfo.deviceId.toString(),
+        "deviceName" : deviceInfo.deviceName.toString(),
+        "OsName" : deviceInfo.osName.toString()
+      });
+      final initialval = await FirebaseFirestore.instance.collection('visits').get();
+      count = initialval.docs[0]. data()['count'];
+      FirebaseFirestore.instance.collection('visits').doc(initialval.docs[0].id).update({
+        "count" : count + 1
+      });
+    }
+  }
+
+  Future<ClientInformation> getdeviceInfo() async {
+    ClientInformation info = await ClientInformation.fetch();
+    return info;
   }
 
   @override
@@ -67,8 +99,8 @@ class _HomeState extends State<Home> {
                     colors: [
                       // Color(0xFF546E7A),
                       // Color(0xFF455A64),
-                      Color(0xFF37474F),
-                      Color(0xFF263238),
+                      const Color(0xFF37474F),
+                      const Color(0xFF263238),
                       // Colors.transparent,
                       // Colors.transparent,
                       Colors.black.withOpacity(0.9)
@@ -98,12 +130,12 @@ class _HomeState extends State<Home> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                TextBut(
+                                textBut(
                                     "About", Colors.transparent, scrollToAbout),
-                                TextBut('Working Process', Colors.transparent,
+                                textBut('Working Process', Colors.transparent,
                                     scrollToWp),
-                                TextBut('Portfolio', Colors.transparent,
-                                    _launchURL),
+                                textBut('Portfolio', Colors.transparent, () =>
+                                    _launchURL(github)),
                                 MaterialButton(
                                   onPressed: scrollToContact,
                                   minWidth: 200.0,
@@ -131,23 +163,21 @@ class _HomeState extends State<Home> {
                     // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20, bottom: 20),
-                      child: Container(
+                      child: SizedBox(
                         height: MediaQuery.of(context).size.height - 60,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           // crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Expanded(
+                            const Expanded(
                                 flex: 5,
                                 child: Padding(
                                   padding: EdgeInsets.only(left: 40),
-                                  child: Container(
-                                    child: Image(
-                                      image:
-                                          AssetImage('assets/images/jyo3.png'),
-                                      height: 500,
-                                      width: 500,
-                                    ),
+                                  child: Image(
+                                    image:
+                                        AssetImage('assets/images/jyo3.png'),
+                                    height: 500,
+                                    width: 500,
                                   ),
                                 )),
                             Expanded(
@@ -168,23 +198,22 @@ class _HomeState extends State<Home> {
                                         child: AnimatedTextKit(
                                           animatedTexts: [
                                             TypewriterAnimatedText('HELLO,',
-                                                speed: Duration(
+                                                speed: const Duration(
                                                     milliseconds: 250)),
                                             TypewriterAnimatedText(
                                                 'I\'m Jyodesh',
-                                                speed: Duration(
+                                                speed: const Duration(
                                                     milliseconds: 250)),
                                           ],
                                           onTap: () {
-                                            print("Tap Event");
                                           },
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
-                                    Text(
+                                    const Text(
                                       "Mobile Developer",
                                       style: TextStyle(
                                           fontWeight: FontWeight.normal,
@@ -192,10 +221,50 @@ class _HomeState extends State<Home> {
                                           fontSize: 30.0,
                                           color: Colors.grey),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
-                                    SocialBut(context)
+                                    socialBut(context),
+                                    const SizedBox(
+                                      height: 100,
+                                    ),
+                                    StreamBuilder(
+                                      stream: collectionStream,
+                                      builder: (context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.data == null) {
+                                          return const Center(child: Text('No Data'));
+                                        }
+                                        return Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Column(
+                                            children: [
+                                              const Text(
+                                                "Total Visits",
+                                                style: TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.grey,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                snapshot.data!.docs[0]
+                                                        ['count'].toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 25,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    )
                                   ],
                                 ),
                               ),
@@ -211,10 +280,11 @@ class _HomeState extends State<Home> {
               WorkingProcess(
                 key: wpKey,
               ),
+              const ProjectsView(),
               Contact(
                 key: contactKey,
               ),
-              Footer()
+              const Footer()
             ],
           ),
         ),
@@ -245,7 +315,7 @@ class _HomeState extends State<Home> {
                     fontFamily: 'Lemon',
                   ),
                 ),
-                leading: Icon(
+                leading: const Icon(
                   Icons.account_box_rounded,
                   color: Colors.grey,
                 ),
@@ -263,7 +333,7 @@ class _HomeState extends State<Home> {
                     fontFamily: 'Lemon',
                   ),
                 ),
-                leading: Icon(
+                leading: const Icon(
                   Icons.message_rounded,
                   color: Colors.grey,
                 ),
@@ -281,12 +351,12 @@ class _HomeState extends State<Home> {
                     fontFamily: 'Lemon',
                   ),
                 ),
-                leading: Icon(
+                leading: const Icon(
                   Icons.web_stories,
                   color: Colors.grey,
                 ),
                 onTap: () {
-                  _launchURL();
+                  _launchURL(github);
                   Navigator.pop(context);
                 },
               ),
@@ -331,8 +401,8 @@ class _HomeState extends State<Home> {
                   colors: [
                     // Color(0xFF546E7A),
                     // Color(0xFF455A64),
-                    Color(0xFF37474F),
-                    Color(0xFF263238),
+                    const Color(0xFF37474F),
+                    const Color(0xFF263238),
                     // Colors.transparent,
                     // Colors.transparent,
                     Colors.black.withOpacity(0.9)
@@ -371,48 +441,69 @@ class _HomeState extends State<Home> {
                       child: Center(
                         child: ClipRect(
                           child: Image.asset(
-                            "assets/images/circle.png",
+                            "assets/images/jyo3.png",
                             width: 250,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        children: const <TextSpan>[
-                          TextSpan(
-                            text: 'Hello, ',
-                            style: TextStyle(
+                    // RichText(
+                    //   text: const TextSpan(
+                    //     children: <TextSpan>[
+                    //       TextSpan(
+                    //         text: 'Hello, ',
+                    //         style: TextStyle(
+                    //             fontWeight: FontWeight.bold,
+                    //             fontFamily: 'Lemon',
+                    //             fontSize: 60.0,
+                    //             color: Color(0xFF84FFFF)),
+                    //       ),
+                    //       TextSpan(
+                    //           text: 'I\'m',
+                    //           style: TextStyle(
+                    //               fontSize: 34,
+                    //               fontWeight: FontWeight.bold,
+                    //               fontFamily: "Roboto",
+                    //               color: Colors.blueGrey)),
+                    //     ],
+                    //   ),
+                    // ),
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        TypewriterAnimatedText('HELLO,',
+                            textStyle: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Lemon',
                                 fontSize: 60.0,
                                 color: Color(0xFF84FFFF)),
-                          ),
-                          TextSpan(
-                              text: 'I\'m',
-                              style: TextStyle(
-                                  fontSize: 34,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: "Roboto",
-                                  color: Colors.blueGrey)),
-                        ],
-                      ),
+                            speed: const Duration(milliseconds: 250)),
+                        TypewriterAnimatedText('I\'m\nJyodesh',
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Lemon',
+                                fontSize: 60.0,
+                                color: Color(0xFF84FFFF)),
+                            speed: const Duration(milliseconds: 250)),
+                      ],
+                      onTap: () {
+                      },
                     ),
-                    Text(
-                      "Jyodesh",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Roboto',
-                          fontSize: 50.0,
-                          color: Colors.blueGrey),
-                    ),
-                    SizedBox(
+
+                    // Text(
+                    //   "Jyodesh",
+                    //   style: TextStyle(
+                    //       fontWeight: FontWeight.bold,
+                    //       fontFamily: 'Roboto',
+                    //       fontSize: 50.0,
+                    //       color: Colors.blueGrey),
+                    // ),
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       "Mobile Developer",
                       style: TextStyle(
                           fontWeight: FontWeight.normal,
@@ -420,7 +511,7 @@ class _HomeState extends State<Home> {
                           fontSize: 30.0,
                           color: Colors.grey),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
@@ -436,11 +527,11 @@ class _HomeState extends State<Home> {
                           child: IconButton(
                               padding: EdgeInsets.zero,
                               iconSize: 30,
-                              color: Color(0xFF5D4037),
-                              onPressed: _launchURL,
-                              icon: FaIcon(FontAwesomeIcons.github)),
+                              color: const Color(0xFF5D4037),
+                              onPressed: () => _launchURL(github),
+                              icon: const FaIcon(FontAwesomeIcons.github)),
                         ),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         Container(
                           height: 40,
                           width: 40,
@@ -452,11 +543,11 @@ class _HomeState extends State<Home> {
                           child: IconButton(
                               padding: EdgeInsets.zero,
                               iconSize: 30,
-                              color: Color(0xFF5D4037),
-                              onPressed: _launchURL,
-                              icon: FaIcon(FontAwesomeIcons.linkedin)),
+                              color: const Color(0xFF5D4037),
+                              onPressed: () => _launchURL(linkedin),
+                              icon: const FaIcon(FontAwesomeIcons.linkedin)),
                         ),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         Container(
                           height: 40,
                           width: 40,
@@ -464,19 +555,17 @@ class _HomeState extends State<Home> {
                               color: Colors.amber,
                               borderRadius: BorderRadius.circular(5)),
                           child: Center(
-                            child: Container(
-                              child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  iconSize: 30,
-                                  color: Color(0xFF5D4037),
-                                  onPressed: _launchURL,
-                                  icon: FaIcon(FontAwesomeIcons.facebook)),
-                            ),
+                            child: IconButton(
+                                padding: EdgeInsets.zero,
+                                iconSize: 30,
+                                color: const Color(0xFF5D4037),
+                                onPressed: () => _launchURL(facebook),
+                                icon: const FaIcon(FontAwesomeIcons.facebook)),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     AnimatedButton(
                       onPress: () {},
                       height: 50,
@@ -485,7 +574,7 @@ class _HomeState extends State<Home> {
                       isReverse: true,
                       selectedTextColor: Colors.black,
                       transitionType: TransitionType.CENTER_ROUNDER,
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                           fontSize: 15,
                           fontFamily: 'Roboto',
                           color: AppColors.greyLight),
@@ -494,7 +583,7 @@ class _HomeState extends State<Home> {
                       borderColor: AppColors.cyyan,
                       borderWidth: 1.6,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                   ],
@@ -502,20 +591,23 @@ class _HomeState extends State<Home> {
               ),
             ),
 
-            Container(key: aboutKey, child: About()),
+            Container(key: aboutKey, child: const About()),
 
-            Container(child: WorkingProcess()),
+            const WorkingProcess(),
 
-            Container(child: Contact()),
+            const ProjectsView(),
 
-            Container(key: contactKey, child: Footer())
+
+            const Contact(),
+
+            Container(key: contactKey, child: const Footer())
           ],
         ),
         floatingActionButton: IconButton(
             onPressed: () {
               scaffoldKey.currentState?.openDrawer();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.menu,
               color: AppColors.greyLight,
               size: 30,
@@ -525,25 +617,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  List<Widget> _slivers() => [
-        SliverToBoxAdapter(
-          key: aboutKey,
-          //child: About(),
-        ),
-        SliverToBoxAdapter(
-          key: wpKey,
-          //child: WorkingProcess(),
-        ),
-        SliverToBoxAdapter(
-          key: contactKey,
-          //child: Contact(),
-        ),
-        SliverToBoxAdapter(
-            // child: Footer(),
-            ),
-      ];
 
-  Widget SocialBut(BuildContext context) {
+  Widget socialBut(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -556,11 +631,11 @@ class _HomeState extends State<Home> {
           child: IconButton(
               padding: EdgeInsets.zero,
               iconSize: 30,
-              color: Color(0xFF5D4037),
-              onPressed: _launchURL,
-              icon: FaIcon(FontAwesomeIcons.github)),
+              color: const Color(0xFF5D4037),
+              onPressed: () => _launchURL(github),
+              icon: const FaIcon(FontAwesomeIcons.github)),
         ),
-        SizedBox(width: 20),
+        const SizedBox(width: 20),
         Container(
           height: 40,
           width: 40,
@@ -571,32 +646,30 @@ class _HomeState extends State<Home> {
           child: IconButton(
               padding: EdgeInsets.zero,
               iconSize: 30,
-              color: Color(0xFF5D4037),
-              onPressed: _launchURL,
-              icon: FaIcon(FontAwesomeIcons.linkedin)),
+              color: const Color(0xFF5D4037),
+              onPressed:  () => _launchURL(linkedin),
+              icon: const FaIcon(FontAwesomeIcons.linkedin)),
         ),
-        SizedBox(width: 20),
+        const SizedBox(width: 20),
         Container(
           height: 40,
           width: 40,
           decoration: BoxDecoration(
               color: Colors.amber, borderRadius: BorderRadius.circular(5)),
           child: Center(
-            child: Container(
-              child: IconButton(
-                  padding: EdgeInsets.zero,
-                  iconSize: 30,
-                  color: Color(0xFF5D4037),
-                  onPressed: _launchURL,
-                  icon: FaIcon(FontAwesomeIcons.facebook)),
-            ),
+            child: IconButton(
+                padding: EdgeInsets.zero,
+                iconSize: 30,
+                color: const Color(0xFF5D4037),
+                onPressed:  () => _launchURL(facebook),
+                icon: const FaIcon(FontAwesomeIcons.facebook)),
           ),
         ),
       ],
     );
   }
 
-  Widget TextBut(textButname, Color col, VoidCallback action) {
+  Widget textBut(textButname, Color col, VoidCallback action) {
     return Row(
       children: [
         TextButton(
@@ -604,23 +677,17 @@ class _HomeState extends State<Home> {
             style: ButtonStyle(backgroundColor: MaterialStateProperty.all(col)),
             child: Text(
               textButname,
-              style: TextStyle(
+              style: const TextStyle(
                   fontFamily: 'Lemon',
                   fontWeight: FontWeight.bold,
                   color: AppColors.greyLight,
                   fontSize: 15),
             )),
-        SizedBox(width: 15)
+        const SizedBox(width: 15)
       ],
     );
   }
 }
 
-void _launchURL() async =>
-    await canLaunch(_url) ? await launch(_url) : throw 'Could not launch $_url';
-void _launchURL1() async => await canLaunch(_url1)
-    ? await launch(_url1)
-    : throw 'Could not launch $_url1';
-void _launchURL2() async => await canLaunch(_url2)
-    ? await launch(_url2)
-    : throw 'Could not launch $_url2';
+void _launchURL(String url) async =>
+    await canLaunchUrl(Uri.parse(url)) ? await launchUrl(Uri.parse(url)) : throw 'Could not launch $url';
