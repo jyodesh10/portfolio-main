@@ -15,7 +15,9 @@ class ProjectsView extends StatefulWidget {
 class _ProjectsViewState extends State<ProjectsView> {
 
   Future<QuerySnapshot<Map<String, dynamic>>> projectsdata =
-    FirebaseFirestore.instance.collection('projects').get();
+    FirebaseFirestore.instance.collection('projects').orderBy('title').get();
+  int projectlength = 0;
+  bool showmore = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,26 +29,6 @@ class _ProjectsViewState extends State<ProjectsView> {
   
   buildProjectsGrid(bool isDesktop) {
     return Container(
-      decoration: BoxDecoration(
-        border: Border.all(width: 0, color: Colors.transparent),
-        gradient: LinearGradient(
-          colors: [
-            // Color(0xFF546E7A),
-            // Color(0xFF455A64),
-            Colors.black.withOpacity(0.9),
-            const Color(0xFF263238),
-            const Color(0xFF37474F),
-            const Color(0xFF263238),
-            Colors.black.withOpacity(0.9)
-    
-            // Colors.transparent,
-            // Colors.transparent,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: const [0, 0.3, 0.5, 0.7, 1],
-        ),
-      ),
       alignment: Alignment.center,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,6 +56,11 @@ class _ProjectsViewState extends State<ProjectsView> {
               if(snapshot.connectionState == ConnectionState.done) {
                 if(snapshot.hasData) {
                   if(snapshot.data!.docs.isNotEmpty) {
+                    Future.delayed(const Duration(seconds: 1), () {
+                      setState(() {
+                        projectlength = snapshot.data!.docs.length;
+                      });
+                    });
                     return GridView(
                       shrinkWrap: true,
                       padding: const EdgeInsets.symmetric(horizontal: 40).copyWith(bottom: 40),
@@ -81,12 +68,17 @@ class _ProjectsViewState extends State<ProjectsView> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: isDesktop ? 3 : 1,
                         childAspectRatio: isDesktop 
-                          ? MediaQuery.of(context).size.aspectRatio * 2 / 4.5
-                          : MediaQuery.of(context).size.aspectRatio * 1 / 1,
+                          ? MediaQuery.of(context).size.aspectRatio * 2 / 4
+                          :  1,
                         crossAxisSpacing: 30,
                         mainAxisSpacing: 30
                       ),
-                      children: List.generate(snapshot.data!.docs.length, (index) {
+                      children: List.generate(showmore
+                        ? snapshot.data!.docs.length
+                        : isDesktop 
+                          ? 6
+                          : 4,
+                        (index) {
                         return Container(
                           decoration: BoxDecoration(
                             color: Colors.transparent,
@@ -101,7 +93,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                                 flex: 5,
                                 child: Image.network(
                                   snapshot.data!.docs[index]['image'],
-                                  fit: BoxFit.cover,
+                                  fit: isDesktop ? BoxFit.contain : BoxFit.fitWidth,
                                   loadingBuilder: (context, child, loadingProgress) => loadingProgress?.expectedTotalBytes == loadingProgress?.cumulativeBytesLoaded
                                     ? child
                                     : Container(
@@ -196,7 +188,26 @@ class _ProjectsViewState extends State<ProjectsView> {
               } 
               return Container();
             }, 
-          )
+          ),
+          projectlength > 6 
+            ? TextButton(
+              onPressed: () {
+                setState(() {
+                  showmore =! showmore;
+                });
+              }, 
+              child:  Text(
+                showmore
+                  ? "Show less"
+                  : "Show more", 
+                style: const TextStyle(
+                  fontFamily: 'Lemon',
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              )
+            )
+            : const SizedBox()
         ],
       ),
     );

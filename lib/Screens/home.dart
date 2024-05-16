@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   final aboutKey = GlobalKey();
   final wpKey = GlobalKey();
+  final projectKey = GlobalKey();
   final contactKey = GlobalKey();
   int count = 0;
   // final _fabStream = StreamController<bool>();
@@ -62,6 +63,11 @@ class _HomeState extends State<Home> {
     Scrollable.ensureVisible(context, duration: const Duration(seconds: 2));
   }
 
+  void scrollToProjects() {
+    final context = projectKey.currentContext!;
+    Scrollable.ensureVisible(context, duration: const Duration(seconds: 2));
+  }
+
   updateCounter() async {
     final deviceInfo = await getdeviceInfo();
     final deviceIds = await FirebaseFirestore.instance.collection('deviceId').get();
@@ -69,7 +75,8 @@ class _HomeState extends State<Home> {
       FirebaseFirestore.instance.collection('deviceId').doc( deviceInfo.deviceId.toString()).set({
         "deviceId" : deviceInfo.deviceId.toString(),
         "deviceName" : deviceInfo.deviceName.toString(),
-        "OsName" : deviceInfo.osName.toString()
+        "OsName" : deviceInfo.osName.toString(),
+        "created_date" : DateTime.now() 
       });
       final initialval = await FirebaseFirestore.instance.collection('visits').get();
       count = initialval.docs[0]. data()['count'];
@@ -90,27 +97,33 @@ class _HomeState extends State<Home> {
       desktopScreen: Scaffold(
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      // Color(0xFF546E7A),
-                      // Color(0xFF455A64),
-                      const Color(0xFF37474F),
-                      const Color(0xFF263238),
-                      // Colors.transparent,
-                      // Colors.transparent,
-                      Colors.black.withOpacity(0.9)
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: const [0, 0.5, 1],
-                  ),
-                ),
-                child: Column(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  // Color(0xFF546E7A),
+                  // Color(0xFF455A64),
+                  const Color(0xFF37474F),
+                  const Color(0xFF263238),
+                  Colors.black.withOpacity(0.9),
+                  const Color(0xFF263238),
+                  const Color(0xFF37474F),
+                  const Color(0xFF263238),
+                  Colors.black.withOpacity(0.9),
+                  const Color(0xFF263238),
+                  const Color(0xFF37474F),
+                  Colors.black.withOpacity(0.9),
+                  Colors.black,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+              ),
+            ),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                Column(
                   children: [
                     Container(
                       color: Colors.transparent,
@@ -130,12 +143,9 @@ class _HomeState extends State<Home> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                textBut(
-                                    "About", Colors.transparent, scrollToAbout),
-                                textBut('Working Process', Colors.transparent,
-                                    scrollToWp),
-                                textBut('Portfolio', Colors.transparent, () =>
-                                    _launchURL(github)),
+                                textBut("About", Colors.transparent, scrollToAbout),
+                                textBut('Working Process', Colors.transparent, scrollToWp),
+                                textBut('Projects', Colors.transparent, scrollToProjects),
                                 MaterialButton(
                                   onPressed: scrollToContact,
                                   minWidth: 200.0,
@@ -157,7 +167,7 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
-
+                
                     // SizedBox(
                     //   height: MediaQuery.of(context).size.height / 5,
                     // ),
@@ -188,7 +198,7 @@ class _HomeState extends State<Home> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      width: 350.0,
+                                      // width: 350.0,
                                       child: DefaultTextStyle(
                                         style: const TextStyle(
                                           fontSize: 80.0,
@@ -201,7 +211,7 @@ class _HomeState extends State<Home> {
                                                 speed: const Duration(
                                                     milliseconds: 250)),
                                             TypewriterAnimatedText(
-                                                'I\'m Jyodesh',
+                                                'I\'m\nJyodesh',
                                                 speed: const Duration(
                                                     milliseconds: 250)),
                                           ],
@@ -213,13 +223,13 @@ class _HomeState extends State<Home> {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    const Text(
+                                    Text(
                                       "Mobile Developer",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          fontFamily: 'Roboto',
-                                          fontSize: 30.0,
-                                          color: Colors.grey),
+                                          fontWeight: FontWeight.w100,
+                                          fontFamily: 'Lemon',
+                                          fontSize: 25.0,
+                                          color: Colors.grey.shade400),
                                     ),
                                     const SizedBox(
                                       height: 20,
@@ -234,17 +244,17 @@ class _HomeState extends State<Home> {
                                           AsyncSnapshot<QuerySnapshot>
                                               snapshot) {
                                         if (snapshot.data == null) {
-                                          return const Center(child: Text('No Data'));
+                                          return const SizedBox(height: 20,);
                                         }
                                         return Align(
                                           alignment: Alignment.bottomCenter,
                                           child: Column(
                                             children: [
-                                              const Text(
-                                                "Total Visits",
+                                              Text(
+                                                "Visitors",
                                                 style: TextStyle(
                                                     fontSize: 25,
-                                                    color: Colors.grey,
+                                                    color: Colors.grey.shade400,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
@@ -275,17 +285,17 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-              ),
-              About(key: aboutKey),
-              WorkingProcess(
-                key: wpKey,
-              ),
-              const ProjectsView(),
-              Contact(
-                key: contactKey,
-              ),
-              const Footer()
-            ],
+                About(key: aboutKey),
+                WorkingProcess(
+                  key: wpKey,
+                ),
+                ProjectsView(key: projectKey),
+                Contact(
+                  key: contactKey,
+                ),
+                const Footer()
+              ],
+            ),
           ),
         ),
       ),
@@ -307,17 +317,17 @@ class _HomeState extends State<Home> {
                 ),
               ),
               ListTile(
-                title: const Text(
+                title: Text(
                   'About',
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.grey.shade400,
                     fontSize: 16,
                     fontFamily: 'Lemon',
                   ),
                 ),
-                leading: const Icon(
+                leading: Icon(
                   Icons.account_box_rounded,
-                  color: Colors.grey,
+                  color: Colors.grey.shade400,
                 ),
                 onTap: () {
                   scrollToAbout();
@@ -325,283 +335,233 @@ class _HomeState extends State<Home> {
                 },
               ),
               ListTile(
-                title: const Text(
-                  'Contact',
+                title: Text(
+                  'Working Process',
                   style: TextStyle(
-                    color: Colors.grey,
+                    color: Colors.grey.shade400,
                     fontSize: 16,
                     fontFamily: 'Lemon',
                   ),
                 ),
-                leading: const Icon(
-                  Icons.message_rounded,
-                  color: Colors.grey,
+                leading: Icon(
+                  Icons.work_rounded,
+                  color: Colors.grey.shade400,
+                ),
+                onTap: () {
+                  scrollToWp();
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Projects',
+                  style: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontSize: 16,
+                    fontFamily: 'Lemon',
+                  ),
+                ),
+                leading: Icon(
+                  Icons.copy_rounded,
+                  color: Colors.grey.shade400,
+                ),
+                onTap: () {
+                  scrollToProjects();
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Contact',
+                  style: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontSize: 16,
+                    fontFamily: 'Lemon',
+                  ),
+                ),
+                leading: Icon(
+                  Icons.contact_page_rounded,
+                  color: Colors.grey.shade400,
                 ),
                 onTap: () {
                   scrollToContact();
                   Navigator.pop(context);
                 },
               ),
-              ListTile(
-                title: const Text(
-                  'Portfolio',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16,
-                    fontFamily: 'Lemon',
-                  ),
-                ),
-                leading: const Icon(
-                  Icons.web_stories,
-                  color: Colors.grey,
-                ),
-                onTap: () {
-                  _launchURL(github);
-                  Navigator.pop(context);
-                },
-              ),
             ],
           ),
         ),
-        body: ListView(
-          shrinkWrap: true,
-          //crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Expanded(
-            //   flex: 3,
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       gradient: LinearGradient(
-            //         colors: [
-            //           Color(0xFF212121),
-            //           // Colors.transparent,
-            //           // Colors.transparent,
-            //           Color(0xFF263238)
-            //         ],
-            //         begin: Alignment.topCenter,
-            //         end: Alignment.bottomCenter,
-            //         stops: [0, 1],
-            //       ),
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: Center(
-            //         child: ClipRect(
-            //           child: Image.asset(
-            //             "assets/images/circle.png",
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    // Color(0xFF546E7A),
-                    // Color(0xFF455A64),
-                    const Color(0xFF37474F),
-                    const Color(0xFF263238),
-                    // Colors.transparent,
-                    // Colors.transparent,
-                    Colors.black.withOpacity(0.9)
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: const [0, 0.5, 1],
-                ),
+        body: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  // Color(0xFF546E7A),
+                  // Color(0xFF455A64),
+                  const Color(0xFF37474F),
+                  const Color(0xFF263238),
+                  Colors.black.withOpacity(0.9),
+                  const Color(0xFF263238),
+                  const Color(0xFF37474F),
+                  const Color(0xFF263238),
+                  Colors.black.withOpacity(0.9),
+                  const Color(0xFF263238),
+                  const Color(0xFF37474F),
+                  Colors.black.withOpacity(0.9),
+                  Colors.black,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                child: Column(
-                  children: [
-                    // Container(
-                    //   width: MediaQuery.of(context).size.width,
-                    //   height: 30,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(left: 10),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.start,
-                    //       children: [
-                    //         IconButton(
-                    //             onPressed: () {
-                    //               scaffoldKey.currentState?.openDrawer();
-                    //             },
-                    //             icon: Icon(
-                    //               Icons.menu,
-                    //               color: AppColors.greyLight,
-                    //             ))
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: ClipRect(
-                          child: Image.asset(
-                            "assets/images/jyo3.png",
-                            width: 250,
+            ),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: ClipRect(
+                            child: Image.asset(
+                              "assets/images/jyo3.png",
+                              width: 250,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    // RichText(
-                    //   text: const TextSpan(
-                    //     children: <TextSpan>[
-                    //       TextSpan(
-                    //         text: 'Hello, ',
-                    //         style: TextStyle(
-                    //             fontWeight: FontWeight.bold,
-                    //             fontFamily: 'Lemon',
-                    //             fontSize: 60.0,
-                    //             color: Color(0xFF84FFFF)),
-                    //       ),
-                    //       TextSpan(
-                    //           text: 'I\'m',
-                    //           style: TextStyle(
-                    //               fontSize: 34,
-                    //               fontWeight: FontWeight.bold,
-                    //               fontFamily: "Roboto",
-                    //               color: Colors.blueGrey)),
-                    //     ],
-                    //   ),
-                    // ),
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        TypewriterAnimatedText('HELLO,',
-                            textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Lemon',
-                                fontSize: 60.0,
-                                color: Color(0xFF84FFFF)),
-                            speed: const Duration(milliseconds: 250)),
-                        TypewriterAnimatedText('I\'m\nJyodesh',
-                            textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Lemon',
-                                fontSize: 60.0,
-                                color: Color(0xFF84FFFF)),
-                            speed: const Duration(milliseconds: 250)),
-                      ],
-                      onTap: () {
-                      },
-                    ),
-
-                    // Text(
-                    //   "Jyodesh",
-                    //   style: TextStyle(
-                    //       fontWeight: FontWeight.bold,
-                    //       fontFamily: 'Roboto',
-                    //       fontSize: 50.0,
-                    //       color: Colors.blueGrey),
-                    // ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      "Mobile Developer",
-                      style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontFamily: 'Roboto',
-                          fontSize: 30.0,
-                          color: Colors.grey),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: IconButton(
-                              padding: EdgeInsets.zero,
-                              iconSize: 30,
-                              color: const Color(0xFF5D4037),
-                              onPressed: () => _launchURL(github),
-                              icon: const FaIcon(FontAwesomeIcons.github)),
-                        ),
-                        const SizedBox(width: 20),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(5)),
-                          //color: Colors.amber,
-                          //alignment: Alignment.center,
-                          child: IconButton(
-                              padding: EdgeInsets.zero,
-                              iconSize: 30,
-                              color: const Color(0xFF5D4037),
-                              onPressed: () => _launchURL(linkedin),
-                              icon: const FaIcon(FontAwesomeIcons.linkedin)),
-                        ),
-                        const SizedBox(width: 20),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Center(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      AnimatedTextKit(
+                        animatedTexts: [
+                          TypewriterAnimatedText('HELLO,',
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Lemon',
+                                  fontSize: 60.0,
+                                  color: Color(0xFF84FFFF)),
+                              speed: const Duration(milliseconds: 250)),
+                          TypewriterAnimatedText('I\'m\nJyodesh',
+                              textStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Lemon',
+                                  fontSize: 60.0,
+                                  color: Color(0xFF84FFFF)),
+                              speed: const Duration(milliseconds: 250)),
+                        ],
+                        onTap: () {
+                        },
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Mobile Developer",
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Lemon',
+                            fontSize: 25.0,
+                            color: Colors.grey.shade400),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(5)),
                             child: IconButton(
                                 padding: EdgeInsets.zero,
                                 iconSize: 30,
                                 color: const Color(0xFF5D4037),
-                                onPressed: () => _launchURL(facebook),
-                                icon: const FaIcon(FontAwesomeIcons.facebook)),
+                                onPressed: () => _launchURL(github),
+                                icon: const FaIcon(FontAwesomeIcons.github)),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-                    AnimatedButton(
-                      onPress: () {},
-                      height: 50,
-                      width: 150,
-                      text: 'View My CV',
-                      isReverse: true,
-                      selectedTextColor: Colors.black,
-                      transitionType: TransitionType.CENTER_ROUNDER,
-                      textStyle: const TextStyle(
-                          fontSize: 15,
-                          fontFamily: 'Roboto',
-                          color: AppColors.greyLight),
-                      backgroundColor: Colors.transparent,
-                      selectedBackgroundColor: AppColors.cyyan,
-                      borderColor: AppColors.cyyan,
-                      borderWidth: 1.6,
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                  ],
+                          const SizedBox(width: 20),
+                          Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(5)),
+                            //color: Colors.amber,
+                            //alignment: Alignment.center,
+                            child: IconButton(
+                                padding: EdgeInsets.zero,
+                                iconSize: 30,
+                                color: const Color(0xFF5D4037),
+                                onPressed: () => _launchURL(linkedin),
+                                icon: const FaIcon(FontAwesomeIcons.linkedin)),
+                          ),
+                          const SizedBox(width: 20),
+                          Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Center(
+                              child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  iconSize: 30,
+                                  color: const Color(0xFF5D4037),
+                                  onPressed: () => _launchURL(facebook),
+                                  icon: const FaIcon(FontAwesomeIcons.facebook)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 30),
+                      AnimatedButton(
+                        onPress: () {},
+                        height: 50,
+                        width: 150,
+                        text: 'View My CV',
+                        isReverse: true,
+                        selectedTextColor: Colors.black,
+                        transitionType: TransitionType.CENTER_ROUNDER,
+                        textStyle: const TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Roboto',
+                            color: AppColors.greyLight),
+                        backgroundColor: Colors.transparent,
+                        selectedBackgroundColor: AppColors.cyyan,
+                        borderColor: AppColors.cyyan,
+                        borderWidth: 1.6,
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                About(
+                  key: aboutKey,
+                ),
+                WorkingProcess(
+                  key: wpKey,
+                ),
+                ProjectsView(
+                  key: projectKey,
+                ),
+                Contact(
+                  key: contactKey,
+                ),
+            
+                const Footer()
+              ],
             ),
-
-            Container(key: aboutKey, child: const About()),
-
-            const WorkingProcess(),
-
-            const ProjectsView(),
-
-
-            const Contact(),
-
-            Container(key: contactKey, child: const Footer())
-          ],
+          ),
         ),
         floatingActionButton: IconButton(
             onPressed: () {

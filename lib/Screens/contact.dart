@@ -31,167 +31,119 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
-        desktopScreen: Container(
-          decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.5),
-              border: Border(
-                  top: BorderSide(
-                color: Colors.black.withOpacity(0.5),
-              ))),
-          child: Container(
-            //height: MediaQuery.of(context).size.height / 2,
-            decoration: BoxDecoration(
-              border: Border.all(width: 0, color: Colors.transparent),
-              gradient: LinearGradient(
-                colors: [
-                  // Color(0xFF546E7A),
-                  // Color(0xFF455A64),
-                  Colors.black.withOpacity(0.9),
-
-                  const Color(0xFF263238),
-                  const Color(0xFF37474F),
-                  // Colors.transparent,
-                  // Colors.transparent,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0, 0.5, 1],
+        desktopScreen: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 80, 0, 80),
+          child: Column(
+            children: [
+              const Text(
+                "Get In Touch",
+                style: TextStyle(
+                  fontFamily: 'Lemon',
+                  color: Colors.amber,
+                  fontSize: 40,
+                ),
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 80, 0, 80),
-              child: Column(
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
-                    "Get In Touch",
-                    style: TextStyle(
-                      fontFamily: 'Lemon',
-                      color: Colors.amber,
-                      fontSize: 40,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          personalInfo(
-                              context,
-                              const Icon(
-                                Icons.email,
-                                color: AppColors.greyLight,
-                              ),
-                              'Email',
-                              'jyodeshshakya@gmail.com'),
-                          const SizedBox(height: 10),
-                          personalInfo(
-                              context,
-                              const Icon(
-                                Icons.phone,
-                                color: AppColors.greyLight,
-                              ),
-                              'Phone',
-                              '+977 9813504214'),
-                          const SizedBox(height: 10),
-                          personalInfo(
-                              context,
-                              const Icon(
-                                Icons.location_on,
-                                color: AppColors.greyLight,
-                              ),
-                              'Location',
-                              'Kathmandu, Nepal'),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      SizedBox(width: 400, child: contactForm(context))
+                      personalInfo(
+                          context,
+                          const Icon(
+                            Icons.email,
+                            color: AppColors.greyLight,
+                          ),
+                          'Email',
+                          'jyodeshshakya@gmail.com'),
+                      const SizedBox(height: 10),
+                      personalInfo(
+                          context,
+                          const Icon(
+                            Icons.phone,
+                            color: AppColors.greyLight,
+                          ),
+                          'Phone',
+                          '+977 9813504214'),
+                      const SizedBox(height: 10),
+                      personalInfo(
+                          context,
+                          const Icon(
+                            Icons.location_on,
+                            color: AppColors.greyLight,
+                          ),
+                          'Location',
+                          'Kathmandu, Nepal'),
                     ],
                   ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  SizedBox(width: 400, child: contactForm(context))
                 ],
               ),
-            ),
+            ],
           ),
         ),
-        mobileScreen: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                // Color(0xFF546E7A),
-                // Color(0xFF455A64),
-                Colors.black.withOpacity(0.9),
-
-                const Color(0xFF263238),
-                const Color(0xFF37474F),
-                // Colors.transparent,
-                // Colors.transparent,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: const [0, 0.5, 1],
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-            child: Column(
-              children: [
-                const Text(
-                  "Get In Touch",
-                  style: TextStyle(
-                    fontFamily: 'Lemon',
-                    color: Colors.amber,
-                    fontSize: 30,
-                  ),
+        mobileScreen: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+          child: Column(
+            children: [
+              const Text(
+                "Get In Touch",
+                style: TextStyle(
+                  fontFamily: 'Lemon',
+                  color: Colors.amber,
+                  fontSize: 30,
                 ),
-                const SizedBox(height: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    personalInfo(
-                        context,
-                        const Icon(
-                          Icons.email,
-                          color: AppColors.greyLight,
-                        ),
-                        'Email',
-                        'jyodeshshakya@gmail.com'),
-                    const SizedBox(height: 10),
-                    personalInfo(
-                        context,
-                        const Icon(
-                          Icons.phone,
-                          color: AppColors.greyLight,
-                        ),
-                        'Phone',
-                        '+977 9813504214'),
-                    const SizedBox(height: 10),
-                    personalInfo(
-                        context,
-                        const Icon(
-                          Icons.location_on,
-                          color: AppColors.greyLight,
-                        ),
-                        'Location',
-                        'Kathmandu, Nepal'),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  height: 500,
-                  width: 400,
-                  decoration: const BoxDecoration(
-                      // border: Border.all(width: 2, color: AppColors.black),
-                      // borderRadius: BorderRadius.circular(10),
-                      color: Colors.transparent),
-                  child: contactForm(context),
-                )
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  personalInfo(
+                      context,
+                      const Icon(
+                        Icons.email,
+                        color: AppColors.greyLight,
+                      ),
+                      'Email',
+                      'jyodeshshakya@gmail.com'),
+                  const SizedBox(height: 10),
+                  personalInfo(
+                      context,
+                      const Icon(
+                        Icons.phone,
+                        color: AppColors.greyLight,
+                      ),
+                      'Phone',
+                      '+977 9813504214'),
+                  const SizedBox(height: 10),
+                  personalInfo(
+                      context,
+                      const Icon(
+                        Icons.location_on,
+                        color: AppColors.greyLight,
+                      ),
+                      'Location',
+                      'Kathmandu, Nepal'),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                height: 500,
+                width: 400,
+                decoration: const BoxDecoration(
+                    // border: Border.all(width: 2, color: AppColors.black),
+                    // borderRadius: BorderRadius.circular(10),
+                    color: Colors.transparent),
+                child: contactForm(context),
+              )
+            ],
           ),
         ));
   }
@@ -336,9 +288,6 @@ class _ContactState extends State<Contact> {
                         name: nameController.text,
                         email: emailController.text,
                         body: bodyController.text);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Successfully Submitted')),
-                    );
                   } else {
                   }
                 },
@@ -369,7 +318,7 @@ class _ContactState extends State<Contact> {
     required String email,
     required String body,
   }) async {
-    const serviceId = 'service_a9hwh16';
+    const serviceId = 'service_y3okpfe';
     const templateId = 'template_a0t9r6b';
     const userId = 'user_CIq0M4Njb997ZHmzEOW89';
 
@@ -387,7 +336,14 @@ class _ContactState extends State<Contact> {
           }
         }));
     if(response.statusCode == 200 ) {
-
+      if(mounted) {
+        emailController.clear();
+        nameController.clear();
+        bodyController.clear();
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Mail Successfully Submitted')),
+          );
+      } 
     }
   }
 

@@ -13,125 +13,83 @@ class _WorkingProcessState extends State<WorkingProcess> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
-      desktopScreen: Container(
-        // height: MediaQuery.of(context).size.height / 2,
-        decoration: BoxDecoration(
-          border: Border.all(width: 0, color: Colors.transparent),
-          gradient: LinearGradient(
-            colors: [
-              // Color(0xFF546E7A),
-              // Color(0xFF455A64),
-              const Color(0xFF37474F),
-
-              const Color(0xFF263238),
-              Colors.black.withOpacity(0.9)
-
-              // Colors.transparent,
-              // Colors.transparent,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0, 0.5, 1],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
-          child: Column(
-            children: [
-              const Text(
-                "Working Process",
-                style: TextStyle(
-                  fontFamily: 'Lemon',
-                  color: Colors.amber,
-                  fontSize: 40,
-                ),
+      desktopScreen: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
+        child: Column(
+          children: [
+            const Text(
+              "Working Process",
+              style: TextStyle(
+                fontFamily: 'Lemon',
+                color: Colors.amber,
+                fontSize: 40,
               ),
-              const SizedBox(
-                height: 40,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            SizedBox(
+              width: 1500,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildCard(
+                      context,
+                      "1.",
+                      "PLAN",
+                      const Icon(Icons.fact_check_outlined,
+                          color: AppColors.greyLight)),
+                  const SizedBox(width: 20),
+                  buildCard(
+                      context,
+                      "2.",
+                      "DESIGN",
+                      const Icon(Icons.design_services_outlined,
+                          color: AppColors.greyLight)),
+                  const SizedBox(width: 20),
+                  buildCard(context, "3.", "CODE",
+                      const Icon(Icons.code_rounded, color: AppColors.greyLight)),
+                  const SizedBox(width: 20),
+                ],
               ),
-              SizedBox(
-                width: 1500,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildCard(
-                        context,
-                        "1.",
-                        "PLAN",
-                        const Icon(Icons.fact_check_outlined,
-                            color: AppColors.greyLight)),
-                    const SizedBox(width: 20),
-                    buildCard(
-                        context,
-                        "2.",
-                        "DESIGN",
-                        const Icon(Icons.design_services_outlined,
-                            color: AppColors.greyLight)),
-                    const SizedBox(width: 20),
-                    buildCard(context, "3.", "CODE",
-                        const Icon(Icons.code_rounded, color: AppColors.greyLight)),
-                    const SizedBox(width: 20),
-                  ],
-                ),
-              )
-
-              // card('Design',
-              //     IconButton(onPressed: null, icon: Icon(Icons.design_services)))
-            ],
-          ),
+            )
+      
+            // card('Design',
+            //     IconButton(onPressed: null, icon: Icon(Icons.design_services)))
+          ],
         ),
       ),
-      mobileScreen: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              // Color(0xFF546E7A),
-              // Color(0xFF455A64),
-              const Color(0xFF37474F),
-
-              const Color(0xFF263238),
-              Colors.black.withOpacity(0.9),
-
-              // Colors.transparent,
-              // Colors.transparent,
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0, 0.5, 1],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
-          child: Column(
-            children: [
-              const Text(
-                "Working Process",
-                style: TextStyle(
-                  fontFamily: 'Lemon',
-                  color: Colors.amber,
-                  fontSize: 30,
-                ),
+      mobileScreen: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
+        child: Column(
+          children: [
+            const Text(
+              "Working Process",
+              style: TextStyle(
+                fontFamily: 'Lemon',
+                color: Colors.amber,
+                fontSize: 30,
               ),
-              buildCard(context, "1.", "PLAN",
-                  const Icon(Icons.fact_check_outlined, color: AppColors.greyLight)),
-
-              const SizedBox(height: 10),
-              buildCard(
-                  context,
-                  "2.",
-                  "DESIGN",
-                  const Icon(Icons.design_services_outlined,
-                      color: AppColors.greyLight)),
-
-              const SizedBox(height: 10),
-              buildCard(context, "3.", "CODE",
-                  const Icon(Icons.code_rounded, color: AppColors.greyLight)),
-              const SizedBox(height: 10),
-              // card('Design',
-              //     IconButton(onPressed: null, icon: Icon(Icons.design_services)))
-            ],
-          ),
+            ),
+            buildCard(context, "1.", "PLAN",
+                const Icon(Icons.fact_check_outlined, color: AppColors.greyLight)),
+      
+            const SizedBox(height: 10),
+            buildCard(
+                context,
+                "2.",
+                "DESIGN",
+                const Icon(Icons.design_services_outlined,
+                    color: AppColors.greyLight)),
+      
+            const SizedBox(height: 10),
+            buildCard(context, "3.", "CODE",
+                const Icon(Icons.code_rounded, color: AppColors.greyLight)),
+            const SizedBox(height: 10),
+            // card('Design',
+            //     IconButton(onPressed: null, icon: Icon(Icons.design_services)))
+          ],
         ),
       ),
     );
