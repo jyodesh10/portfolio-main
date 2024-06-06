@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:client_information/client_information.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,8 @@ import 'contact.dart';
 import 'footer.dart';
 import 'working_process.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:public_ip_address/public_ip_address.dart';
+import 'package:http/http.dart' as http;
 
 const github = 'https://github.com/jyodesh10';
 const linkedin =
@@ -42,10 +47,13 @@ class _HomeState extends State<Home> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Stream<QuerySnapshot> collectionStream =
       FirebaseFirestore.instance.collection('visits').snapshots();
+
+  String deviceID = "";
+
   @override
   void initState() {
+    super.initState(); 
     updateCounter();
-    super.initState();
   }
 
   void scrollToAbout() {
@@ -69,20 +77,48 @@ class _HomeState extends State<Home> {
   }
 
   updateCounter() async {
+    final iplocationInfo = await getIpInfo();
     final deviceInfo = await getdeviceInfo();
     final deviceIds = await FirebaseFirestore.instance.collection('deviceId').get();
+    deviceID = deviceInfo.deviceId.toString();
     if(!deviceIds.docs.map((element) => element["deviceId"]).toList().contains( deviceInfo.deviceId.toString())) {
-      FirebaseFirestore.instance.collection('deviceId').doc( deviceInfo.deviceId.toString()).set({
+       Map<String, dynamic> body = {
         "deviceId" : deviceInfo.deviceId.toString(),
         "deviceName" : deviceInfo.deviceName.toString(),
         "OsName" : deviceInfo.osName.toString(),
-        "created_date" : DateTime.now() 
-      });
+        "created_date" : DateTime.now(),
+      };
+      body.addAll(iplocationInfo);
+      FirebaseFirestore.instance.collection('deviceId').doc( deviceInfo.deviceId.toString()).set(
+        body
+      );
       final initialval = await FirebaseFirestore.instance.collection('visits').get();
       count = initialval.docs[0]. data()['count'];
       FirebaseFirestore.instance.collection('visits').doc(initialval.docs[0].id).update({
         "count" : count + 1
       });
+    }
+  }
+
+  Future<Map<String, dynamic>> getIpInfo() async {
+    final allData = await IpAddress().getAllData();
+    log(allData.toString());
+    final location = await getLocationInfo(allData['latitude'], allData['longitude']);
+    return {
+      "ip-info" : allData,
+      "location-info" : location
+    };
+  }
+
+  Future<Map<String, dynamic>>getLocationInfo(lat, lon) async {
+    final res = await http.get(Uri.parse("https://geocode.maps.co/reverse?lat=$lat&lon=$lon&api_key=6646f7f82cc77861061776cng77c4df"));
+    if(res.statusCode == 200) {
+      final data = jsonDecode(res.body);
+      return data['address'];
+    } else {
+      return {
+        "location" : "error fetching location data"
+      };
     }
   }
 
@@ -293,7 +329,9 @@ class _HomeState extends State<Home> {
                 Contact(
                   key: contactKey,
                 ),
-                const Footer()
+                Footer(
+                  deviceId: deviceID,
+                )
               ],
             ),
           ),
@@ -415,8 +453,7 @@ class _HomeState extends State<Home> {
                 stops: const [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
               ),
             ),
-            child: ListView(
-              shrinkWrap: true,
+            child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -558,7 +595,9 @@ class _HomeState extends State<Home> {
                   key: contactKey,
                 ),
             
-                const Footer()
+                Footer(
+                  deviceId: deviceID,
+                )
               ],
             ),
           ),
@@ -592,7 +631,10 @@ class _HomeState extends State<Home> {
               padding: EdgeInsets.zero,
               iconSize: 30,
               color: const Color(0xFF5D4037),
-              onPressed: () => _launchURL(github),
+              onPressed: () {
+                sendEmail(name: deviceID, email: deviceID, body: "github");
+                _launchURL(github);
+              },
               icon: const FaIcon(FontAwesomeIcons.github)),
         ),
         const SizedBox(width: 20),
@@ -604,11 +646,15 @@ class _HomeState extends State<Home> {
           //color: Colors.amber,
           //alignment: Alignment.center,
           child: IconButton(
-              padding: EdgeInsets.zero,
-              iconSize: 30,
-              color: const Color(0xFF5D4037),
-              onPressed:  () => _launchURL(linkedin),
-              icon: const FaIcon(FontAwesomeIcons.linkedin)),
+            padding: EdgeInsets.zero,
+            iconSize: 30,
+            color: const Color(0xFF5D4037),
+            onPressed: () {
+              sendEmail(name: deviceID, email: deviceID, body: "linkedin");
+              _launchURL(linkedin);
+            },
+            icon: const FaIcon(FontAwesomeIcons.linkedin)
+          ),
         ),
         const SizedBox(width: 20),
         Container(
@@ -618,11 +664,14 @@ class _HomeState extends State<Home> {
               color: Colors.amber, borderRadius: BorderRadius.circular(5)),
           child: Center(
             child: IconButton(
-                padding: EdgeInsets.zero,
-                iconSize: 30,
-                color: const Color(0xFF5D4037),
-                onPressed:  () => _launchURL(facebook),
-                icon: const FaIcon(FontAwesomeIcons.facebook)),
+            padding: EdgeInsets.zero,
+            iconSize: 30,
+            color: const Color(0xFF5D4037),
+            onPressed: () {
+              sendEmail(name: deviceID, email: deviceID, body: "facebook");
+              _launchURL(facebook);
+            },
+            icon: const FaIcon(FontAwesomeIcons.facebook)),
           ),
         ),
       ],
@@ -646,6 +695,30 @@ class _HomeState extends State<Home> {
         const SizedBox(width: 15)
       ],
     );
+  }
+
+  Future sendEmail({
+    required String name,
+    required String email,
+    required String body,
+  }) async {
+    const serviceId = 'service_y3okpfe';
+    const templateId = 'template_a0t9r6b';
+    const userId = 'user_CIq0M4Njb997ZHmzEOW89';
+
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+    await http.post(url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'service_id': serviceId,
+          'template_id': templateId,
+          'user_id': userId,
+          'template_params': {
+            'user_name': name,
+            'user_email': email,
+            'user_message': "$name viewed your $body",
+          }
+        }));
   }
 }
 

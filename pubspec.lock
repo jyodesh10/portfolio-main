@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  avatar_glow:
-    dependency: "direct main"
-    description:
-      name: avatar_glow
-      sha256: "848d9a85065e398241d8ffae0dcc50902980c24490aef21fd4c6b6342d4c26b4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -304,14 +296,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
-  mailto:
-    dependency: "direct main"
-    description:
-      name: mailto
-      sha256: f8c5ce39e0eaa94a856795b2855af7f66aac37f7c3b70ac5c26ab00b94685445
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   matcher:
     dependency: transitive
     description:
@@ -336,14 +320,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
-  particles_flutter:
-    dependency: "direct main"
-    description:
-      name: particles_flutter
-      sha256: "920b4e2df3281108db546bffb8672a5c18e649c6e90d257409bcc8efb1e846dc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.4"
   path:
     dependency: transitive
     description:
@@ -424,6 +400,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  public_ip_address:
+    dependency: "direct main"
+    description:
+      name: public_ip_address
+      sha256: "03b78fb35f7b683bbefca62c19571405a5f641c9e0277aa4fdd8e47198cc7779"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   quiver:
     dependency: "direct main"
     description:
