@@ -1,22 +1,24 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:html' as html;
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:client_information/client_information.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'projects.dart';
-import 'responsive_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'about.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:portfolio/config/colors.dart';
+import 'package:public_ip_address/public_ip_address.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'about.dart';
 import 'contact.dart';
 import 'footer.dart';
+import 'projects.dart';
+import 'responsive_widget.dart';
 import 'working_process.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:public_ip_address/public_ip_address.dart';
-import 'package:http/http.dart' as http;
 
 const github = 'https://github.com/jyodesh10';
 const linkedin =
@@ -49,6 +51,7 @@ class _HomeState extends State<Home> {
       FirebaseFirestore.instance.collection('visits').snapshots();
 
   String deviceID = "";
+  String visitFrom = "";
 
   @override
   void initState() {
@@ -87,6 +90,7 @@ class _HomeState extends State<Home> {
         "deviceName" : deviceInfo.deviceName.toString(),
         "OsName" : deviceInfo.osName.toString(),
         "created_date" : DateTime.now(),
+        "visit_from" : visitFrom
       };
       body.addAll(iplocationInfo);
       FirebaseFirestore.instance.collection('deviceId').doc( deviceInfo.deviceId.toString()).set(
@@ -101,7 +105,13 @@ class _HomeState extends State<Home> {
   }
 
   Future<Map<String, dynamic>> getIpInfo() async {
+    final currentUrl = Uri.parse(html.window.location.href);
+    final queryParameters = currentUrl.queryParameters;
+    if(queryParameters.isNotEmpty) {
+        visitFrom = queryParameters['from']!;
+    }
     final allData = await IpAddress().getAllData();
+    
     log(allData.toString());
     final location = await getLocationInfo(allData['latitude'], allData['longitude']);
     return {
@@ -129,6 +139,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    return body();
+  }
+
+  body() {
     return ResponsiveWidget(
       desktopScreen: Scaffold(
         resizeToAvoidBottomInset: false,
