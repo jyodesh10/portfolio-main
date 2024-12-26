@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:portfolio/config/colors.dart';
-import 'responsive_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio/config/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'responsive_widget.dart';
 
 const github = 'https://github.com/jyodesh10';
 const linkedin =
@@ -39,8 +40,8 @@ class _FooterState extends State<Footer> {
               children: [
                 Image.asset(
                   'assets/images/logo.png',
-                  height: 200,
-                  width: 200,
+                  height: 180,
+                  width: 180,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

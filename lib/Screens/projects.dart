@@ -68,8 +68,8 @@ class _ProjectsViewState extends State<ProjectsView> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: isDesktop ? 3 : 1,
                         childAspectRatio: isDesktop 
-                          ? MediaQuery.of(context).size.aspectRatio * 2 / 4
-                          :  1,
+                          ? MediaQuery.of(context).size.aspectRatio * 2 / 4.4
+                          :  .8,
                         crossAxisSpacing: 30,
                         mainAxisSpacing: 30
                       ),
@@ -82,7 +82,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                         return Container(
                           decoration: BoxDecoration(
                             color: Colors.transparent,
-                            border: Border.all(color: AppColors.cyyan, width: 3),
+                            border: Border.all(color: AppColors.cyyan, width: 2),
                             borderRadius: BorderRadius.circular(15),
                           ),
                           padding: const EdgeInsets.all(15),
@@ -90,7 +90,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                flex: 5,
+                                flex: isDesktop ? 3 : 5,
                                 child: Image.network(
                                   snapshot.data!.docs[index]['image'],
                                   fit: isDesktop ? BoxFit.contain : BoxFit.fitWidth,
@@ -138,8 +138,9 @@ class _ProjectsViewState extends State<ProjectsView> {
                                               fontSize: 12,
                                               fontFamily: "Roboto",
                                               fontWeight: FontWeight.w100,
+                                              overflow: TextOverflow.ellipsis
                                             ),
-                                            maxLines: 4,
+                                            maxLines:isDesktop ? 4 : 2,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ],
@@ -158,7 +159,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                                           height: 50,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(10),
-                                            side: const BorderSide(color: AppColors.cyyan, width: 3)
+                                            side: const BorderSide(color: AppColors.cyyan, width: 2)
                                           ),
                                           elevation: 5,
                                           hoverColor: AppColors.cyyan.withOpacity(0.5),

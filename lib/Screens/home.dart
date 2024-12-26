@@ -137,6 +137,9 @@ class _HomeState extends State<Home> {
     return info;
   }
 
+    Future<QuerySnapshot<Map<String, dynamic>>> homedata =
+      FirebaseFirestore.instance.collection('home').get();
+
   @override
   Widget build(BuildContext context) {
     return body();
@@ -229,17 +232,48 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           // crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Expanded(
-                                flex: 5,
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 40),
-                                  child: Image(
-                                    image:
-                                        AssetImage('assets/images/jyo3.png'),
-                                    height: 500,
-                                    width: 500,
-                                  ),
-                                )),
+                            Expanded(
+                              flex: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 40),
+                                child: FutureBuilder(
+                                  future: homedata, 
+                                  builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                                    if(snapshot.connectionState == ConnectionState.waiting) {
+                                      return const Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 50),
+                                        child: LinearProgressIndicator(
+                                          color: AppColors.cyyan,
+                                        ),
+                                      );
+                                    }
+                                    if(snapshot.connectionState == ConnectionState.done) {
+                                      if(snapshot.data!.docs.isNotEmpty) {
+                                        return CircleAvatar(
+                                          radius: 230,
+                                          backgroundColor: const Color(0xFF263238),
+                                          child: CircleAvatar(
+                                            radius: 200,
+                                            backgroundImage: NetworkImage(snapshot.data!.docs.first['image']),
+                                            backgroundColor: const Color(0xFF263238),
+                                          ),
+                                        );
+                                      } else {
+                                        return const SizedBox();
+                                      }
+                                    }
+                                    return const SizedBox();
+                                  },
+                                ),
+                                
+                                // Image(
+                                //   image:
+                                //       AssetImage('assets/images/jyo3.png'),
+                                //   height: 500,
+                                //   width: 500,
+                                // ),
+                              )
+                            ),
                             Expanded(
                               flex: 6,
                               child: SingleChildScrollView(
@@ -475,14 +509,32 @@ class _HomeState extends State<Home> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: ClipRect(
-                            child: Image.asset(
-                              "assets/images/jyo3.png",
-                              width: 250,
-                            ),
-                          ),
-                        ),
+                        child: FutureBuilder(
+                        future: homedata, 
+                        builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                          if(snapshot.connectionState == ConnectionState.waiting) {
+                            return const CircularProgressIndicator(
+                              color: Colors.cyan,
+                            );
+                          }
+                          if(snapshot.connectionState == ConnectionState.done) {
+                            if(snapshot.data!.docs.isNotEmpty) {
+                              return CircleAvatar(
+                                radius: 125,
+                                backgroundColor: Colors.transparent,
+                                child: CircleAvatar(
+                                  radius: 100,
+                                  backgroundImage: NetworkImage(snapshot.data!.docs.first['image']),
+                                  backgroundColor: const Color(0xFF263238),
+                                ),
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }
+                          return const SizedBox();
+                        },
+                      ),
                       ),
                       const SizedBox(
                         height: 20,
