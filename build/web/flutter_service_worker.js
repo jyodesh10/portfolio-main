@@ -42,9 +42,9 @@ const RESOURCES = {".well-known/acme-challenge/INcEPsrf8Kz6CBs_Q47tfzucQCAzHClfd
 "icons/Icon-512.png": "9a8fa45906e7c293f2be775c7293b821",
 "icons/Icon-maskable-192.png": "634e0e6d6cb8035e37327d00ac007d76",
 "icons/Icon-maskable-512.png": "9a8fa45906e7c293f2be775c7293b821",
-"index.html": "171323135901e64e1c6b06a47e77a785",
-"/": "171323135901e64e1c6b06a47e77a785",
-"main.dart.js": "62c57d46966ae7c6e54700ba137d84e5",
+"index.html": "fd9068287a2f05d5ea140bffd1f2af7c",
+"/": "fd9068287a2f05d5ea140bffd1f2af7c",
+"main.dart.js": "618f3371b0628e5d93fd9ca381b821e0",
 "manifest.json": "cd7cb024311853bf4c8218e4256acf03",
 "version.json": "009c9e65172e010890f7f65fde438006"};
 // The application shell files that are downloaded before a service worker can

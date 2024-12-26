@@ -521,7 +521,7 @@ class _HomeState extends State<Home> {
                             if(snapshot.data!.docs.isNotEmpty) {
                               return CircleAvatar(
                                 radius: 125,
-                                backgroundColor: Colors.transparent,
+                                backgroundColor: const Color(0xFF263238),
                                 child: CircleAvatar(
                                   radius: 100,
                                   backgroundImage: NetworkImage(snapshot.data!.docs.first['image']),
