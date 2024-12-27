@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/config/colors.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+
 import 'responsive_widget.dart';
 
 class WorkingProcess extends StatefulWidget {
@@ -64,12 +66,12 @@ class _WorkingProcessState extends State<WorkingProcess> {
         padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
         child: Column(
           children: [
-            const Text(
+            Text(
               "Working Process",
               style: TextStyle(
                 fontFamily: 'Lemon',
                 color: Colors.amber,
-                fontSize: 30,
+                fontSize: 22.sp,
               ),
             ),
             buildCard(context, "1.", "PLAN",
@@ -105,8 +107,8 @@ class _WorkingProcessState extends State<WorkingProcess> {
       ),
       margin: const EdgeInsets.all(20.0),
       child: SizedBox(
-        height: 220,
-        width: 220,
+        height: 50.sp,
+        width: 50.sp,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -117,9 +119,9 @@ class _WorkingProcessState extends State<WorkingProcess> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   index,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: AppColors.greyLight,
-                    fontSize: 30,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -127,7 +129,7 @@ class _WorkingProcessState extends State<WorkingProcess> {
               Center(
                 child: IconButton(
                     padding: EdgeInsets.zero,
-                    iconSize: 70,
+                    iconSize: 27.sp,
                     color: Colors.white,
                     onPressed: null,
                     icon: icon),
@@ -136,8 +138,8 @@ class _WorkingProcessState extends State<WorkingProcess> {
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Text(
                   text,
-                  style: const TextStyle(
-                      fontSize: 25,
+                  style: TextStyle(
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                       color: AppColors.greyLight),
                 ),

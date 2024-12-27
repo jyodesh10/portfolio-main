@@ -11,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio/config/colors.dart';
 import 'package:public_ip_address/public_ip_address.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'about.dart';
@@ -407,13 +408,15 @@ class _HomeState extends State<Home> {
                   'About',
                   style: TextStyle(
                     color: Colors.grey.shade400,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontFamily: 'Lemon',
                   ),
                 ),
                 leading: Icon(
                   Icons.account_box_rounded,
                   color: Colors.grey.shade400,
+                  size: 18.sp,
+
                 ),
                 onTap: () {
                   scrollToAbout();
@@ -425,13 +428,15 @@ class _HomeState extends State<Home> {
                   'Working Process',
                   style: TextStyle(
                     color: Colors.grey.shade400,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontFamily: 'Lemon',
                   ),
                 ),
                 leading: Icon(
                   Icons.work_rounded,
                   color: Colors.grey.shade400,
+                  size: 18.sp,
+
                 ),
                 onTap: () {
                   scrollToWp();
@@ -443,13 +448,15 @@ class _HomeState extends State<Home> {
                   'Projects',
                   style: TextStyle(
                     color: Colors.grey.shade400,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontFamily: 'Lemon',
                   ),
                 ),
                 leading: Icon(
                   Icons.copy_rounded,
                   color: Colors.grey.shade400,
+                  size: 18.sp,
+
                 ),
                 onTap: () {
                   scrollToProjects();
@@ -461,13 +468,14 @@ class _HomeState extends State<Home> {
                   'Contact',
                   style: TextStyle(
                     color: Colors.grey.shade400,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     fontFamily: 'Lemon',
                   ),
                 ),
                 leading: Icon(
                   Icons.contact_page_rounded,
                   color: Colors.grey.shade400,
+                  size: 18.sp,
                 ),
                 onTap: () {
                   scrollToContact();
@@ -520,10 +528,10 @@ class _HomeState extends State<Home> {
                           if(snapshot.connectionState == ConnectionState.done) {
                             if(snapshot.data!.docs.isNotEmpty) {
                               return CircleAvatar(
-                                radius: 125,
+                                radius: 45.sp,
                                 backgroundColor: const Color(0xFF263238),
                                 child: CircleAvatar(
-                                  radius: 100,
+                                  radius: 40.sp,
                                   backgroundImage: NetworkImage(snapshot.data!.docs.first['image']),
                                   backgroundColor: const Color(0xFF263238),
                                 ),
@@ -542,18 +550,18 @@ class _HomeState extends State<Home> {
                       AnimatedTextKit(
                         animatedTexts: [
                           TypewriterAnimatedText('HELLO,',
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Lemon',
-                                  fontSize: 60.0,
-                                  color: Color(0xFF84FFFF)),
+                                  fontSize: 28.0.sp,
+                                  color: const Color(0xFF84FFFF)),
                               speed: const Duration(milliseconds: 250)),
                           TypewriterAnimatedText('I\'m\nJyodesh',
-                              textStyle: const TextStyle(
+                              textStyle:  TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Lemon',
-                                  fontSize: 60.0,
-                                  color: Color(0xFF84FFFF)),
+                                  fontSize: 28.0.sp,
+                                  color: const Color(0xFF84FFFF)),
                               speed: const Duration(milliseconds: 250)),
                         ],
                         onTap: () {
@@ -567,7 +575,7 @@ class _HomeState extends State<Home> {
                         style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontFamily: 'Lemon',
-                            fontSize: 25.0,
+                            fontSize: 18.0.sp,
                             color: Colors.grey.shade400),
                       ),
                       const SizedBox(
@@ -578,22 +586,22 @@ class _HomeState extends State<Home> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            height: 40,
-                            width: 40,
+                            height: 26.sp,
+                            width: 26.sp,
                             decoration: BoxDecoration(
                                 color: Colors.amber,
                                 borderRadius: BorderRadius.circular(5)),
                             child: IconButton(
                                 padding: EdgeInsets.zero,
-                                iconSize: 30,
+                                iconSize: 20.sp,
                                 color: const Color(0xFF5D4037),
                                 onPressed: () => _launchURL(github),
                                 icon: const FaIcon(FontAwesomeIcons.github)),
                           ),
                           const SizedBox(width: 20),
                           Container(
-                            height: 40,
-                            width: 40,
+                            height: 26.sp,
+                            width: 26.sp,
                             decoration: BoxDecoration(
                                 color: Colors.amber,
                                 borderRadius: BorderRadius.circular(5)),
@@ -601,22 +609,22 @@ class _HomeState extends State<Home> {
                             //alignment: Alignment.center,
                             child: IconButton(
                                 padding: EdgeInsets.zero,
-                                iconSize: 30,
+                                iconSize: 20.sp,
                                 color: const Color(0xFF5D4037),
                                 onPressed: () => _launchURL(linkedin),
                                 icon: const FaIcon(FontAwesomeIcons.linkedin)),
                           ),
                           const SizedBox(width: 20),
                           Container(
-                            height: 40,
-                            width: 40,
+                            height: 26.sp,
+                            width: 26.sp,
                             decoration: BoxDecoration(
                                 color: Colors.amber,
                                 borderRadius: BorderRadius.circular(5)),
                             child: Center(
                               child: IconButton(
                                   padding: EdgeInsets.zero,
-                                  iconSize: 30,
+                                  iconSize: 20.sp,
                                   color: const Color(0xFF5D4037),
                                   onPressed: () => _launchURL(facebook),
                                   icon: const FaIcon(FontAwesomeIcons.facebook)),
@@ -627,14 +635,14 @@ class _HomeState extends State<Home> {
                       const SizedBox(height: 30),
                       AnimatedButton(
                         onPress: () {},
-                        height: 50,
+                        height: 30.sp,
                         width: 150,
                         text: 'View My CV',
                         isReverse: true,
                         selectedTextColor: Colors.black,
                         transitionType: TransitionType.CENTER_ROUNDER,
-                        textStyle: const TextStyle(
-                            fontSize: 15,
+                        textStyle:  TextStyle(
+                            fontSize: 16.sp,
                             fontFamily: 'Roboto',
                             color: AppColors.greyLight),
                         backgroundColor: Colors.transparent,

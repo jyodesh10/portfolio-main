@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio/config/colors.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'responsive_widget.dart';
 
@@ -182,10 +183,10 @@ class _AboutState extends State<About> {
                   if(snapshot.connectionState == ConnectionState.done) {
                     if(snapshot.data!.docs.isNotEmpty) {
                       return CircleAvatar(
-                        radius: 125,
+                        radius: 44.sp,
                         backgroundColor: const Color(0xFF263238),
                         child: CircleAvatar(
-                          radius: 100,
+                          radius: 41.sp,
                           backgroundImage: NetworkImage(snapshot.data!.docs.first['image']),
                           backgroundColor: const Color(0xFF263238),
                         ),
@@ -198,12 +199,12 @@ class _AboutState extends State<About> {
                 },
               ),
             ),
-            const Text(
+            Text(
               "About Me",
               style: TextStyle(
                 fontFamily: 'Lemon',
                 color: Colors.amber,
-                fontSize: 30,
+                fontSize: 22.sp,
               ),
             ),
             const SizedBox(
@@ -215,19 +216,19 @@ class _AboutState extends State<About> {
                 child: Text(
                   "I'm a mobile and web developer based in Kathmandu, Nepal currently developing mobile apps and websites.",
                   style: TextStyle(
-                      fontSize: 18, fontFamily: 'Roboto', color: Colors.grey.shade300),
+                      fontSize: 15.sp, fontFamily: 'Roboto', color: Colors.grey.shade300),
                 ),
               ),
             ),
             const SizedBox(
               height: 30,
             ),
-            const Text(
+            Text(
               "Skills",
               style: TextStyle(
                 fontFamily: 'Lemon',
                 color: Colors.amber,
-                fontSize: 30,
+                fontSize: 22.sp,
               ),
             ),
             const SizedBox(
@@ -290,16 +291,16 @@ class _AboutState extends State<About> {
       child: Center(
         child: Column(
           children: [
-            Image.network(image, height: 50, width: 50,),
+            Image.network(image, height: 25.sp, width:  25.sp,),
             const SizedBox(
               height: 5,
             ),
             Text(
               skillname,
-              style: const TextStyle(
+              style: TextStyle(
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.normal,
-                fontSize: 13,
+                fontSize: 14.sp,
                 color: AppColors.greyLight
               ),
               overflow: TextOverflow.ellipsis,

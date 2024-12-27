@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio/config/colors.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'responsive_widget.dart';
@@ -48,7 +49,7 @@ class _FooterState extends State<Footer> {
                   children: [
                     IconButton(
                       padding: EdgeInsets.zero,
-                      iconSize: 30,
+                      iconSize: 18.sp,
                       onPressed: () {
                         _launchURL(github);
                         sendEmail(name: widget.deviceId, email: widget.deviceId, body: "github");
@@ -57,12 +58,12 @@ class _FooterState extends State<Footer> {
                         FontAwesomeIcons.github,
                         color: AppColors.greyLight,
                       )),
-                    const SizedBox(
-                      width: 20,
+                    SizedBox(
+                      width: 12.sp,
                     ),
                     IconButton(
                       padding: EdgeInsets.zero,
-                      iconSize: 30,
+                      iconSize: 18.sp,
                       color: AppColors.greyLight,
                       onPressed: () {
                         _launchURL(linkedin);
@@ -72,12 +73,12 @@ class _FooterState extends State<Footer> {
                         FontAwesomeIcons.linkedin,
                         color: AppColors.greyLight,
                       )),
-                    const SizedBox(
-                      width: 20,
+                    SizedBox(
+                      width: 12.sp,
                     ),
                     IconButton(
                       padding: EdgeInsets.zero,
-                      iconSize: 30,
+                      iconSize: 18.sp,
                       color: AppColors.greyLight,
                       onPressed: () {
                         _launchURL(facebook);
@@ -87,12 +88,12 @@ class _FooterState extends State<Footer> {
                         FontAwesomeIcons.facebook,
                         color: AppColors.greyLight,
                       )),
-                    const SizedBox(
-                      width: 20,
+                    SizedBox(
+                      width: 12.sp,
                     ),
                     IconButton(
                       padding: EdgeInsets.zero,
-                      iconSize: 30,
+                      iconSize: 18.sp,
                       color: AppColors.greyLight,
                       onPressed: () {
                         _launchURL(whatsapp);
@@ -108,7 +109,7 @@ class _FooterState extends State<Footer> {
                 Text(
                   'Copyright © 2024 Jyodesh Shakya | All rights reserved',
                   style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.normal,
                       color: Colors.grey.shade500),
                 ),

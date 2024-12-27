@@ -1,5 +1,6 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:flutter/material.dart";
+import "package:responsive_sizer/responsive_sizer.dart";
 import "package:url_launcher/url_launcher.dart";
 
 import "../config/colors.dart";
@@ -37,11 +38,11 @@ class _ProjectsViewState extends State<ProjectsView> {
           const SizedBox(
             height: 40,
           ),
-          const Text("Projects", 
+          Text("Projects", 
             style: TextStyle(
               fontFamily: 'Lemon',
               color: Colors.amber,
-              fontSize: 40,
+              fontSize: isDesktop ? 20.sp : 22.sp,
             ),
           ),
           const SizedBox(
@@ -93,7 +94,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                                 flex: isDesktop ? 3 : 5,
                                 child: Image.network(
                                   snapshot.data!.docs[index]['image'],
-                                  fit: isDesktop ? BoxFit.contain : BoxFit.fitWidth,
+                                  fit: isDesktop ? BoxFit.cover : BoxFit.fitWidth,
                                   loadingBuilder: (context, child, loadingProgress) => loadingProgress?.expectedTotalBytes == loadingProgress?.cumulativeBytesLoaded
                                     ? child
                                     : Container(
@@ -120,9 +121,9 @@ class _ProjectsViewState extends State<ProjectsView> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(snapshot.data!.docs[index]['title'],
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               color: AppColors.greyLight,
-                                              fontSize: 16,
+                                              fontSize: 14  .sp,
                                               fontFamily: "Lemon",
                                               fontWeight: FontWeight.w700,
                                             ),
@@ -135,7 +136,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                                           Text(snapshot.data!.docs[index]['body'],
                                             style: TextStyle(
                                               color: AppColors.greyLight.withOpacity(0.8),
-                                              fontSize: 12,
+                                              fontSize: 12.sp,
                                               fontFamily: "Roboto",
                                               fontWeight: FontWeight.w100,
                                               overflow: TextOverflow.ellipsis
@@ -163,10 +164,10 @@ class _ProjectsViewState extends State<ProjectsView> {
                                           ),
                                           elevation: 5,
                                           hoverColor: AppColors.cyyan.withOpacity(0.5),
-                                          child: const Text("VIEW", 
+                                          child:  Text("VIEW", 
                                             style: TextStyle(
                                               color: AppColors.greyLight,
-                                              fontSize: 12,
+                                              fontSize: 12.sp,
                                               fontFamily: "Lemon",
                                               fontWeight: FontWeight.w300,
                                             )
@@ -201,10 +202,10 @@ class _ProjectsViewState extends State<ProjectsView> {
                 showmore
                   ? "Show less"
                   : "Show more", 
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Lemon',
                   color: Colors.white,
-                  fontSize: 20,
+                  fontSize: isDesktop ? 15.sp : 16.sp,
                 ),
               )
             )

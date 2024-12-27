@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'Screens/home.dart';
-import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,14 +27,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Jyodesh Shakya',
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primarySwatch: Colors.blue,
-      ),
-      home: const Home(),
+    return ResponsiveSizer(
+      builder: (context, orientation, screenType) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Jyodesh Shakya',
+          theme: ThemeData(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            primarySwatch: Colors.blue,
+          ),
+          home: const Home(),
+        );
+      },
     );
   }
 }

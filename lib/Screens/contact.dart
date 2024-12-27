@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
-import 'package:portfolio/config/colors.dart';
-import 'responsive_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio/config/colors.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+
+import 'responsive_widget.dart';
 
 class Contact extends StatefulWidget {
   const Contact({super.key});
@@ -91,12 +93,12 @@ class _ContactState extends State<Contact> {
           padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
           child: Column(
             children: [
-              const Text(
+              Text(
                 "Get In Touch",
                 style: TextStyle(
                   fontFamily: 'Lemon',
                   color: Colors.amber,
-                  fontSize: 30,
+                  fontSize:  22.sp,
                 ),
               ),
               const SizedBox(height: 20),
@@ -157,7 +159,7 @@ class _ContactState extends State<Contact> {
         children: [
           IconButton(
               padding: EdgeInsets.zero,
-              iconSize: 25,
+              iconSize: 20.sp,
               color: Colors.white,
               onPressed: null,
               icon: icon),
@@ -169,15 +171,15 @@ class _ContactState extends State<Contact> {
                 width: 5,
               ),
               Text(label,
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 14.sp,
                       color: AppColors.greyLight)),
               const SizedBox(height: 5),
               Text(text,
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.normal,
-                      fontSize: 15,
+                      fontSize: 14.sp,
                       color: AppColors.greyLight))
             ],
           ),
@@ -297,8 +299,8 @@ class _ContactState extends State<Contact> {
                 isReverse: true,
                 selectedTextColor: Colors.black,
                 transitionType: TransitionType.CENTER_ROUNDER,
-                textStyle: const TextStyle(
-                    fontSize: 15,
+                textStyle: TextStyle(
+                    fontSize: 14.sp,
                     fontFamily: 'Roboto',
                     color: AppColors.greyLight),
                 backgroundColor: Colors.transparent,
