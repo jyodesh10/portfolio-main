@@ -74,10 +74,12 @@ class _WorkingProcessState extends State<WorkingProcess> {
                 fontSize: 22.sp,
               ),
             ),
+            SizedBox(height: 10.sp),
+
             buildCard(context, "1.", "PLAN",
                 const Icon(Icons.fact_check_outlined, color: AppColors.greyLight)),
       
-            const SizedBox(height: 10),
+            // SizedBox(height: 8.sp),
             buildCard(
                 context,
                 "2.",
@@ -85,10 +87,10 @@ class _WorkingProcessState extends State<WorkingProcess> {
                 const Icon(Icons.design_services_outlined,
                     color: AppColors.greyLight)),
       
-            const SizedBox(height: 10),
+            // SizedBox(height: 8.sp),
             buildCard(context, "3.", "CODE",
                 const Icon(Icons.code_rounded, color: AppColors.greyLight)),
-            const SizedBox(height: 10),
+            // SizedBox(height: 8.sp),
             // card('Design',
             //     IconButton(onPressed: null, icon: Icon(Icons.design_services)))
           ],
@@ -105,7 +107,7 @@ class _WorkingProcessState extends State<WorkingProcess> {
         side: const BorderSide(color: AppColors.cyyan, width: 3),
         borderRadius: BorderRadius.circular(10),
       ),
-      margin: const EdgeInsets.all(20.0),
+      margin:  EdgeInsets.all(15.sp),
       child: SizedBox(
         height: 50.sp,
         width: 50.sp,

@@ -556,7 +556,7 @@ class _HomeState extends State<Home> {
                                   fontSize: 28.0.sp,
                                   color: const Color(0xFF84FFFF)),
                               speed: const Duration(milliseconds: 250)),
-                          TypewriterAnimatedText('I\'m\nJyodesh',
+                          TypewriterAnimatedText(' I\'m\nJyodesh',
                               textStyle:  TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Lemon',
@@ -635,8 +635,8 @@ class _HomeState extends State<Home> {
                       const SizedBox(height: 30),
                       AnimatedButton(
                         onPress: () {},
-                        height: 30.sp,
-                        width: 150,
+                        height: 28.sp,
+                        width: 48.sp,
                         text: 'View My CV',
                         isReverse: true,
                         selectedTextColor: Colors.black,
@@ -680,10 +680,10 @@ class _HomeState extends State<Home> {
             onPressed: () {
               scaffoldKey.currentState?.openDrawer();
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.menu,
               color: AppColors.greyLight,
-              size: 30,
+              size: 22.sp,
             )),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       ),

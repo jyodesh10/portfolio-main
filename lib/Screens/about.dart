@@ -167,11 +167,11 @@ class _AboutState extends State<About> {
         ),
       ),
       mobileScreen: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+        padding: EdgeInsets.fromLTRB(0, 25.sp, 0, 0),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 25.sp),
               child: FutureBuilder(
                 future: profiledata, 
                 builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -216,12 +216,13 @@ class _AboutState extends State<About> {
                 child: Text(
                   "I'm a mobile and web developer based in Kathmandu, Nepal currently developing mobile apps and websites.",
                   style: TextStyle(
-                      fontSize: 15.sp, fontFamily: 'Roboto', color: Colors.grey.shade300),
+                      fontSize: 16.sp, fontFamily: 'Roboto', color: Colors.grey.shade300),
+                  // textAlign: TextAlign.justify,
                 ),
               ),
             ),
-            const SizedBox(
-              height: 30,
+            SizedBox(
+              height: 30.sp,
             ),
             Text(
               "Skills",
