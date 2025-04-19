@@ -107,7 +107,7 @@ class _FooterState extends State<Footer> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Copyright © 2024 Jyodesh Shakya | All rights reserved',
+                  'Copyright © 2025 Jyodesh Shakya | All rights reserved',
                   style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.normal,

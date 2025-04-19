@@ -651,7 +651,47 @@ class _HomeState extends State<Home> {
                         borderWidth: 1.6,
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
+                      ),
+                      StreamBuilder(
+                        stream: collectionStream,
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot>
+                                snapshot) {
+                          if (snapshot.data == null) {
+                            return const SizedBox(height: 20,);
+                          }
+                          return Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Visitors",
+                                  style: TextStyle(
+                                      fontSize: 18.sp,
+                                      color: Colors.grey.shade400,
+                                      fontWeight:
+                                          FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  snapshot.data!.docs[0]
+                                          ['count'].toString(),
+                                  style: TextStyle(
+                                      fontSize: 20.sp,
+                                      color: Colors.white,
+                                      fontWeight:
+                                          FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 15,
                       ),
                     ],
                   ),
