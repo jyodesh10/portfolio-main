@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,9 @@ class _ContactState extends State<Contact> {
   TextEditingController emailController = TextEditingController();
 
   TextEditingController bodyController = TextEditingController();
+
+  Future<QuerySnapshot<Map<String, dynamic>>> contactdata =
+  FirebaseFirestore.instance.collection('contact').get();
 
   //  void _setText() {
   //   setState(() {
@@ -49,36 +53,46 @@ class _ContactState extends State<Contact> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      personalInfo(
-                          context,
-                          const Icon(
-                            Icons.email,
-                            color: AppColors.greyLight,
-                          ),
-                          'Email',
-                          'jyodeshshakya@gmail.com'),
-                      const SizedBox(height: 10),
-                      personalInfo(
-                          context,
-                          const Icon(
-                            Icons.phone,
-                            color: AppColors.greyLight,
-                          ),
-                          'Phone',
-                          '+977 9813504214'),
-                      const SizedBox(height: 10),
-                      personalInfo(
-                          context,
-                          const Icon(
-                            Icons.location_on,
-                            color: AppColors.greyLight,
-                          ),
-                          'Location',
-                          'Kathmandu, Nepal'),
-                    ],
+                  FutureBuilder(
+                    future: contactdata, 
+                    builder: (context, snapshot) {
+                      if(snapshot.connectionState == ConnectionState.done) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            personalInfo(
+                                context,
+                                const Icon(
+                                  Icons.email,
+                                  color: AppColors.greyLight,
+                                ),
+                                'Email',
+                                snapshot.data!.docs.first['email']),
+                            const SizedBox(height: 10),
+                            personalInfo(
+                                context,
+                                const Icon(
+                                  Icons.phone,
+                                  color: AppColors.greyLight,
+                                ),
+                                'Phone',
+                                snapshot.data!.docs.first['phone']),
+                            const SizedBox(height: 10),
+                            personalInfo(
+                                context,
+                                const Icon(
+                                  Icons.location_on,
+                                  color: AppColors.greyLight,
+                                ),
+                                'Location',
+                                snapshot.data!.docs.first['location']),
+                          ],
+                        );
+                      }
+                      return const SizedBox(
+                        width: 400,
+                      );
+                    },
                   ),
                   const SizedBox(
                     width: 50,
@@ -102,36 +116,46 @@ class _ContactState extends State<Contact> {
                 ),
               ),
               const SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  personalInfo(
-                      context,
-                      const Icon(
-                        Icons.email,
-                        color: AppColors.greyLight,
-                      ),
-                      'Email',
-                      'jyodeshshakya@gmail.com'),
-                  const SizedBox(height: 10),
-                  personalInfo(
-                      context,
-                      const Icon(
-                        Icons.phone,
-                        color: AppColors.greyLight,
-                      ),
-                      'Phone',
-                      '+977 9813504214'),
-                  const SizedBox(height: 10),
-                  personalInfo(
-                      context,
-                      const Icon(
-                        Icons.location_on,
-                        color: AppColors.greyLight,
-                      ),
-                      'Location',
-                      'Kathmandu, Nepal'),
-                ],
+              FutureBuilder(
+                future: contactdata, 
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.done) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        personalInfo(
+                            context,
+                            const Icon(
+                              Icons.email,
+                              color: AppColors.greyLight,
+                            ),
+                            'Email',
+                            snapshot.data!.docs.first['email']),
+                        const SizedBox(height: 10),
+                        personalInfo(
+                            context,
+                            const Icon(
+                              Icons.phone,
+                              color: AppColors.greyLight,
+                            ),
+                            'Phone',
+                            snapshot.data!.docs.first['phone']),
+                        const SizedBox(height: 10),
+                        personalInfo(
+                            context,
+                            const Icon(
+                              Icons.location_on,
+                              color: AppColors.greyLight,
+                            ),
+                            'Location',
+                            snapshot.data!.docs.first['location']),
+                      ],
+                    );
+                  }
+                  return const SizedBox(
+                    height: 20,
+                  );
+                },
               ),
               const SizedBox(
                 height: 30,
@@ -150,7 +174,7 @@ class _ContactState extends State<Contact> {
         ));
   }
 
-  Widget personalInfo(BuildContext context, icon, String label, String text) {
+  Widget personalInfo(BuildContext context, icon, String label, String text, {bool isMobile = false}) {
     return FittedBox(
       // height: 300,
       //width: 300,
@@ -159,7 +183,7 @@ class _ContactState extends State<Contact> {
         children: [
           IconButton(
               padding: EdgeInsets.zero,
-              iconSize: 20.sp,
+              iconSize: isMobile? 20.sp : 18.sp,
               color: Colors.white,
               onPressed: null,
               icon: icon),
@@ -173,13 +197,13 @@ class _ContactState extends State<Contact> {
               Text(label,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 14.sp,
+                      fontSize: 13.sp,
                       color: AppColors.greyLight)),
               const SizedBox(height: 5),
               Text(text,
                   style: TextStyle(
                       fontWeight: FontWeight.normal,
-                      fontSize: 14.sp,
+                      fontSize: 13.sp,
                       color: AppColors.greyLight))
             ],
           ),

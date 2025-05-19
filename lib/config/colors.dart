@@ -6,4 +6,6 @@ mixin AppColors {
   static const black = Colors.black87;
 
   static const greyLight = Color(0xFFF5F5F5);
+
+  static const white = Colors.white;
 }

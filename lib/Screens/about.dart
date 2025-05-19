@@ -58,14 +58,29 @@ class _AboutState extends State<About> {
                       ),
                     ),
                     SizedBox(
-                      width: 700,
-                      child: Text(
-                        "I'm a mobile and web developer based in Kathmandu, Nepal currently developing mobile apps and websites.",
-                        style: TextStyle(
-                            fontSize: 21,
-                            fontFamily: 'Roboto',
-                            color: Colors.grey.shade300),
-                      ),
+                      height: 10.sp,
+                    ),
+                    FutureBuilder(
+                      future: profiledata, 
+                      builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                        if(snapshot.connectionState == ConnectionState.done) {
+                          return SizedBox(
+                            width: 700,
+                            child: Text(
+                              snapshot.data!.docs.first['description'],
+                              style: TextStyle(
+                                  fontSize: 12.5.sp,
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w200,
+                                  color: Colors.grey.shade300),
+                              // textAlign: TextAlign.justify,
+                            ),
+                          );
+                        }
+                        return const SizedBox(
+                          height: 700,
+                        );
+                      }
                     ),
                     const SizedBox(
                       height: 80,
@@ -210,17 +225,27 @@ class _AboutState extends State<About> {
             const SizedBox(
               height: 20,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-              child: Center(
-                child: Text(
-                  "I'm a mobile and web developer based in Kathmandu, Nepal currently developing mobile apps and websites.",
-                  style: TextStyle(
-                      fontSize: 16.sp, fontFamily: 'Roboto', color: Colors.grey.shade300),
-                  // textAlign: TextAlign.justify,
-                ),
-              ),
-            ),
+                    FutureBuilder(
+                      future: profiledata, 
+                      builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                        if(snapshot.connectionState == ConnectionState.done) {
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                              child: Center(
+                                child: Text(
+                                  snapshot.data!.docs.first['description'],
+                                  style: TextStyle(
+                                      fontSize: 16.sp, fontFamily: 'Roboto', color: Colors.grey.shade300),
+                                  // textAlign: TextAlign.justify,
+                                ),
+                              ),
+                            );
+                        }
+                        return const SizedBox(
+                          height: 700,
+                        );
+                      }
+                    ),
             SizedBox(
               height: 30.sp,
             ),

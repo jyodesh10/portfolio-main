@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
           ),
           home: const Home(),
+          // home: const ExperienceView(),
         );
       },
     );

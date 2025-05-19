@@ -15,6 +15,7 @@ const linkedin =
 
 const facebook = 'https://facebook.com';
 const whatsapp = 'https://wa.me/9813504214';
+const instagram = 'https://www.instagram.com/zyodes_10/';
 
 class Footer extends StatefulWidget {
   const Footer({super.key, required this.deviceId});
@@ -28,7 +29,7 @@ class _FooterState extends State<Footer> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
-      mobileScreen: Container(
+      desktopScreen: Container(
         height: 300,
         color: Colors.black87,
         //alignment: Alignment.center,
@@ -43,6 +44,117 @@ class _FooterState extends State<Footer> {
                   'assets/images/logo.png',
                   height: 180,
                   width: 180,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 15.5.sp,
+                      onPressed: () {
+                        _launchURL(github);
+                        sendEmail(name: widget.deviceId, email: widget.deviceId, body: "github");
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.github,
+                        color: AppColors.greyLight,
+                      )),
+                    SizedBox(
+                      width: 12.sp,
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 15.5.sp,
+                      color: AppColors.greyLight,
+                      onPressed: () {
+                        _launchURL(linkedin);
+                        sendEmail(name: widget.deviceId, email: widget.deviceId, body: "linkedin");
+                      },
+                      icon: const FaIcon(
+                        FontAwesomeIcons.linkedin,
+                        color: AppColors.greyLight,
+                      )),
+                    SizedBox(
+                      width: 12.sp,
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 15.5.sp,
+                      color: AppColors.greyLight,
+                      onPressed: () {
+                        _launchURL(whatsapp);
+                        sendEmail(name: widget.deviceId, email: widget.deviceId, body: "whatsapp");
+                      },                            
+                      icon: const FaIcon(
+                        FontAwesomeIcons.whatsapp,
+                        color: AppColors.greyLight,
+                      )
+                    ),
+                    SizedBox(
+                      width: 12.sp,
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 15.5.sp,
+                      color: AppColors.greyLight,
+                      onPressed: () {
+                        _launchURL(facebook);
+                        sendEmail(name: widget.deviceId, email: widget.deviceId, body: "facebook");
+                      },                        
+                      icon: const FaIcon(
+                        FontAwesomeIcons.facebook,
+                        color: AppColors.greyLight,
+                      )),
+                    SizedBox(
+                      width: 12.sp,
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 15.5.sp,
+                      color: AppColors.greyLight,
+                      onPressed: () {
+                        _launchURL(instagram);
+                        sendEmail(name: widget.deviceId, email: widget.deviceId, body: "instagram");
+                      },                        
+                      icon: const FaIcon(
+                        FontAwesomeIcons.instagram,
+                        color: AppColors.greyLight,
+                      )
+                    ),
+                    SizedBox(
+                      width: 12.sp,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Copyright © 2025 Jyodesh Shakya | All rights reserved',
+                  style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.grey.shade500),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ],
+        ),
+      ),
+      mobileScreen: Container(
+        height: 300,
+        color: Colors.black87,
+        //alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 50.sp,
+                  width: 50.sp,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +199,24 @@ class _FooterState extends State<Footer> {
                       icon: const FaIcon(
                         FontAwesomeIcons.facebook,
                         color: AppColors.greyLight,
-                      )),
+                      )
+                    ),
+                    SizedBox(
+                      width: 12.sp,
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 18.sp,
+                      color: AppColors.greyLight,
+                      onPressed: () {
+                        _launchURL(instagram);
+                        sendEmail(name: widget.deviceId, email: widget.deviceId, body: "instagram");
+                      },                        
+                      icon: const FaIcon(
+                        FontAwesomeIcons.instagram,
+                        color: AppColors.greyLight,
+                      )
+                    ),
                     SizedBox(
                       width: 12.sp,
                     ),

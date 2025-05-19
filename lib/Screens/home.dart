@@ -16,6 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'about.dart';
 import 'contact.dart';
+import 'experience.dart';
 import 'footer.dart';
 import 'projects.dart';
 import 'responsive_widget.dart';
@@ -40,6 +41,7 @@ class _HomeState extends State<Home> {
   final wpKey = GlobalKey();
   final projectKey = GlobalKey();
   final contactKey = GlobalKey();
+  final experienceKey = GlobalKey();
   int count = 0;
   // final _fabStream = StreamController<bool>();
   // Future scrollToAbout() async {
@@ -72,6 +74,11 @@ class _HomeState extends State<Home> {
 
   void scrollToWp() {
     final context = wpKey.currentContext!;
+    Scrollable.ensureVisible(context, duration: const Duration(seconds: 2));
+  }
+
+  void scrollToExperience() {
+    final context = experienceKey.currentContext!;
     Scrollable.ensureVisible(context, duration: const Duration(seconds: 2));
   }
 
@@ -159,14 +166,14 @@ class _HomeState extends State<Home> {
                   // Color(0xFF455A64),
                   const Color(0xFF37474F),
                   const Color(0xFF263238),
-                  Colors.black.withOpacity(0.9),
+                  Colors.black.withValues(alpha:0.9),
                   const Color(0xFF263238),
                   const Color(0xFF37474F),
                   const Color(0xFF263238),
-                  Colors.black.withOpacity(0.9),
+                  Colors.black.withValues(alpha:0.9),
                   const Color(0xFF263238),
                   const Color(0xFF37474F),
-                  Colors.black.withOpacity(0.9),
+                  Colors.black.withValues(alpha:0.9),
                   Colors.black,
                 ],
                 begin: Alignment.topCenter,
@@ -199,6 +206,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 textBut("About", Colors.transparent, scrollToAbout),
                                 textBut('Working Process', Colors.transparent, scrollToWp),
+                                textBut('Experience', Colors.transparent, scrollToExperience),
                                 textBut('Projects', Colors.transparent, scrollToProjects),
                                 MaterialButton(
                                   onPressed: scrollToContact,
@@ -371,6 +379,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
                 About(key: aboutKey),
+                ExperienceView(key: experienceKey),
                 WorkingProcess(
                   key: wpKey,
                 ),
@@ -445,6 +454,26 @@ class _HomeState extends State<Home> {
               ),
               ListTile(
                 title: Text(
+                  'Experience',
+                  style: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontSize: 16.sp,
+                    fontFamily: 'Lemon',
+                  ),
+                ),
+                leading: Icon(
+                  Icons.portrait_rounded,
+                  color: Colors.grey.shade400,
+                  size: 18.sp,
+
+                ),
+                onTap: () {
+                  scrollToExperience();
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
                   'Projects',
                   style: TextStyle(
                     color: Colors.grey.shade400,
@@ -494,14 +523,14 @@ class _HomeState extends State<Home> {
                   // Color(0xFF455A64),
                   const Color(0xFF37474F),
                   const Color(0xFF263238),
-                  Colors.black.withOpacity(0.9),
+                  Colors.black.withValues(alpha:  0.9),
                   const Color(0xFF263238),
                   const Color(0xFF37474F),
                   const Color(0xFF263238),
-                  Colors.black.withOpacity(0.9),
+                  Colors.black.withValues(alpha:0.9),
                   const Color(0xFF263238),
                   const Color(0xFF37474F),
-                  Colors.black.withOpacity(0.9),
+                  Colors.black.withValues(alpha:0.9),
                   Colors.black,
                 ],
                 begin: Alignment.topCenter,
@@ -626,8 +655,8 @@ class _HomeState extends State<Home> {
                                   padding: EdgeInsets.zero,
                                   iconSize: 20.sp,
                                   color: const Color(0xFF5D4037),
-                                  onPressed: () => _launchURL(facebook),
-                                  icon: const FaIcon(FontAwesomeIcons.facebook)),
+                                  onPressed: () => _launchURL(whatsapp),
+                                  icon: const FaIcon(FontAwesomeIcons.whatsapp)),
                             ),
                           ),
                         ],
@@ -699,6 +728,7 @@ class _HomeState extends State<Home> {
                 About(
                   key: aboutKey,
                 ),
+                ExperienceView(key: experienceKey),
                 WorkingProcess(
                   key: wpKey,
                 ),
@@ -782,10 +812,10 @@ class _HomeState extends State<Home> {
             iconSize: 30,
             color: const Color(0xFF5D4037),
             onPressed: () {
-              sendEmail(name: deviceID, email: deviceID, body: "facebook");
-              _launchURL(facebook);
+              sendEmail(name: deviceID, email: deviceID, body: "whatsapp");
+              _launchURL(whatsapp);
             },
-            icon: const FaIcon(FontAwesomeIcons.facebook)),
+              icon: const FaIcon(FontAwesomeIcons.whatsapp)),
           ),
         ),
       ],
@@ -797,7 +827,7 @@ class _HomeState extends State<Home> {
       children: [
         TextButton(
             onPressed: action,
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(col)),
+            style: ButtonStyle(backgroundColor: WidgetStateProperty.all(col)),
             child: Text(
               textButname,
               style: const TextStyle(

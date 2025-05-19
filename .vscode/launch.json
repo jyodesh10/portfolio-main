@@ -45,5 +45,16 @@
                 "html",
             ]
         },
+        {
+            "name": "Wasm (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "-d",
+                "chrome",
+                "--wasm"
+            ]
+        },
     ]
 }
