@@ -135,7 +135,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                                           ),
                                           Text(snapshot.data!.docs[index]['body'],
                                             style: TextStyle(
-                                              color: AppColors.greyLight.withOpacity(0.8),
+                                              color: AppColors.greyLight.withValues(alpha:  0.8),
                                               fontSize: 12.sp,
                                               fontFamily: "Roboto",
                                               fontWeight: FontWeight.w100,
@@ -163,7 +163,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                                             side: const BorderSide(color: AppColors.cyyan, width: 2)
                                           ),
                                           elevation: 5,
-                                          hoverColor: AppColors.cyyan.withOpacity(0.5),
+                                          hoverColor: AppColors.cyyan.withValues(alpha:  0.5),
                                           child:  Text("VIEW", 
                                             style: TextStyle(
                                               color: AppColors.greyLight,

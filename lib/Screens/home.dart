@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_web_libraries_in_flutter
+
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:html' as html;
@@ -21,12 +23,6 @@ import 'footer.dart';
 import 'projects.dart';
 import 'responsive_widget.dart';
 import 'working_process.dart';
-
-const github = 'https://github.com/jyodesh10';
-const linkedin =
-    'https://np.linkedin.com/in/jyodesh-shakya-ba6a50145?trk=public_profile_browsemap_profile-result-card_result-card_full-click';
-
-const facebook = 'https://facebook.com/zyodes10';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -52,6 +48,8 @@ class _HomeState extends State<Home> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Stream<QuerySnapshot> collectionStream =
       FirebaseFirestore.instance.collection('visits').snapshots();
+  Future<QuerySnapshot<Map<String, dynamic>>> linksdata =
+      FirebaseFirestore.instance.collection('links').get();
 
   String deviceID = "";
   String visitFrom = "";
@@ -610,56 +608,66 @@ class _HomeState extends State<Home> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 26.sp,
-                            width: 26.sp,
-                            decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: IconButton(
-                                padding: EdgeInsets.zero,
-                                iconSize: 20.sp,
-                                color: const Color(0xFF5D4037),
-                                onPressed: () => _launchURL(github),
-                                icon: const FaIcon(FontAwesomeIcons.github)),
-                          ),
-                          const SizedBox(width: 20),
-                          Container(
-                            height: 26.sp,
-                            width: 26.sp,
-                            decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5)),
-                            //color: Colors.amber,
-                            //alignment: Alignment.center,
-                            child: IconButton(
-                                padding: EdgeInsets.zero,
-                                iconSize: 20.sp,
-                                color: const Color(0xFF5D4037),
-                                onPressed: () => _launchURL(linkedin),
-                                icon: const FaIcon(FontAwesomeIcons.linkedin)),
-                          ),
-                          const SizedBox(width: 20),
-                          Container(
-                            height: 26.sp,
-                            width: 26.sp,
-                            decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: Center(
-                              child: IconButton(
-                                  padding: EdgeInsets.zero,
-                                  iconSize: 20.sp,
-                                  color: const Color(0xFF5D4037),
-                                  onPressed: () => _launchURL(whatsapp),
-                                  icon: const FaIcon(FontAwesomeIcons.whatsapp)),
-                            ),
-                          ),
-                        ],
+                      FutureBuilder(
+                        future: linksdata, 
+                        builder: (context, snapshot) {
+                          if(snapshot.connectionState == ConnectionState.done) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 26.sp,
+                                  width: 26.sp,
+                                  decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      iconSize: 20.sp,
+                                      color: const Color(0xFF5D4037),
+                                      onPressed: () => _launchURL(snapshot.data!.docs.first['github']),
+                                      icon: const FaIcon(FontAwesomeIcons.github)),
+                                ),
+                                const SizedBox(width: 20),
+                                Container(
+                                  height: 26.sp,
+                                  width: 26.sp,
+                                  decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  //color: Colors.amber,
+                                  //alignment: Alignment.center,
+                                  child: IconButton(
+                                      padding: EdgeInsets.zero,
+                                      iconSize: 20.sp,
+                                      color: const Color(0xFF5D4037),
+                                      onPressed: () => _launchURL(snapshot.data!.docs.first['linkedin']),
+                                      icon: const FaIcon(FontAwesomeIcons.linkedin)),
+                                ),
+                                const SizedBox(width: 20),
+                                Container(
+                                  height: 26.sp,
+                                  width: 26.sp,
+                                  decoration: BoxDecoration(
+                                      color: Colors.amber,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Center(
+                                    child: IconButton(
+                                        padding: EdgeInsets.zero,
+                                        iconSize: 20.sp,
+                                        color: const Color(0xFF5D4037),
+                                        onPressed: () => _launchURL(snapshot.data!.docs.first['whatsapp']),
+                                        icon: const FaIcon(FontAwesomeIcons.whatsapp)),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }
+                          return SizedBox(
+                            height: 20.sp,
+                          );
+                        },
                       ),
                       const SizedBox(height: 30),
                       AnimatedButton(
@@ -762,63 +770,73 @@ class _HomeState extends State<Home> {
 
 
   Widget socialBut(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-              color: Colors.amber, borderRadius: BorderRadius.circular(5)),
-          child: IconButton(
-              padding: EdgeInsets.zero,
-              iconSize: 30,
-              color: const Color(0xFF5D4037),
-              onPressed: () {
-                sendEmail(name: deviceID, email: deviceID, body: "github");
-                _launchURL(github);
-              },
-              icon: const FaIcon(FontAwesomeIcons.github)),
-        ),
-        const SizedBox(width: 20),
-        Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-              color: Colors.amber, borderRadius: BorderRadius.circular(5)),
-          //color: Colors.amber,
-          //alignment: Alignment.center,
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            iconSize: 30,
-            color: const Color(0xFF5D4037),
-            onPressed: () {
-              sendEmail(name: deviceID, email: deviceID, body: "linkedin");
-              _launchURL(linkedin);
-            },
-            icon: const FaIcon(FontAwesomeIcons.linkedin)
-          ),
-        ),
-        const SizedBox(width: 20),
-        Container(
-          height: 40,
-          width: 40,
-          decoration: BoxDecoration(
-              color: Colors.amber, borderRadius: BorderRadius.circular(5)),
-          child: Center(
-            child: IconButton(
-            padding: EdgeInsets.zero,
-            iconSize: 30,
-            color: const Color(0xFF5D4037),
-            onPressed: () {
-              sendEmail(name: deviceID, email: deviceID, body: "whatsapp");
-              _launchURL(whatsapp);
-            },
-              icon: const FaIcon(FontAwesomeIcons.whatsapp)),
-          ),
-        ),
-      ],
+    return FutureBuilder(
+      future: linksdata, 
+      builder: (context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.done) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: Colors.amber, borderRadius: BorderRadius.circular(5)),
+                child: IconButton(
+                    padding: EdgeInsets.zero,
+                    iconSize: 30,
+                    color: const Color(0xFF5D4037),
+                    onPressed: () {
+                      sendEmail(name: deviceID, email: deviceID, body: "github");
+                      _launchURL(snapshot.data!.docs.first['github']);
+                    },
+                    icon: const FaIcon(FontAwesomeIcons.github)),
+              ),
+              const SizedBox(width: 20),
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: Colors.amber, borderRadius: BorderRadius.circular(5)),
+                //color: Colors.amber,
+                //alignment: Alignment.center,
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  iconSize: 30,
+                  color: const Color(0xFF5D4037),
+                  onPressed: () {
+                    sendEmail(name: deviceID, email: deviceID, body: "linkedin");
+                    _launchURL(snapshot.data!.docs.first['linkedin']);
+                  },
+                  icon: const FaIcon(FontAwesomeIcons.linkedin)
+                ),
+              ),
+              const SizedBox(width: 20),
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: Colors.amber, borderRadius: BorderRadius.circular(5)),
+                child: Center(
+                  child: IconButton(
+                  padding: EdgeInsets.zero,
+                  iconSize: 30,
+                  color: const Color(0xFF5D4037),
+                  onPressed: () {
+                    sendEmail(name: deviceID, email: deviceID, body: "whatsapp");
+                    _launchURL(snapshot.data!.docs.first['whatsapp']);
+                  },
+                    icon: const FaIcon(FontAwesomeIcons.whatsapp)),
+                ),
+              ),
+            ],
+          );
+        }
+        return SizedBox(
+          height: 20.sp,
+        );
+      },
     );
   }
 
