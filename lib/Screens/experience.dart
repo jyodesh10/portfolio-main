@@ -51,7 +51,7 @@ class _ExperienceViewState extends State<ExperienceView> {
                         // space: 5.sp,
                       )
                     ),
-                    padding: EdgeInsets.only(left: 30.w, right: 30.w),
+                    padding: EdgeInsets.only(left: 30.w, right: 25.w),
                     builder: TimelineTileBuilder.fromStyle(
                       connectorStyle: ConnectorStyle.solidLine,
                       indicatorStyle: IndicatorStyle.outlined,

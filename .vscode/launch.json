@@ -30,7 +30,18 @@
                 "-d",
                 "chrome",
                 "--web-renderer",
-                "html",
+                "html"
+            ]
+        },
+        {
+            "name": "debug_option_hot_reload",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+                "-d",
+                "chrome",
+                "--web-experimental-hot-reload"
             ]
         },
         {

@@ -1,9 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:portfolio/Screens/splash.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
-import 'Screens/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +35,7 @@ class MyApp extends StatelessWidget {
             visualDensity: VisualDensity.adaptivePlatformDensity,
             primarySwatch: Colors.blue,
           ),
-          home: const Home(),
+          home: const Splash(),
           // home: const ExperienceView(),
         );
       },
